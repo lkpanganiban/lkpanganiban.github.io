@@ -30,7 +30,13 @@
 				document.getElementsByTagName( 'head' )[0].appendChild( link );
 			}
 		</script>
+		<style>
+			#terminal {
+				color:yellow;
+				font-size: 30px;
 
+			}
+		</style>
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
@@ -50,23 +56,130 @@
 					</p>
 				</section>
 				<section>
-					<section>
-						<h1>About US</h1>
-					</section>
-					<section>
-						<h1>Tidal WebGIS Tool</h1>
-					</section>
-					<section>
-						<h1>Hackathons</h1>
-					</section>
+					<h1>About US</h1>
+					<ul>
+						<li>Licensed Geodetic Engineers</li>
+						<li>Tidal Current Energy Integrated Resource Assessment and Spatial Planning (Current)
+							<ul>
+								<li><font size="5px">WebGIS Component - Django and D3 JS</font></li>
+							</ul>
+						</li>
+						<li>Hackathons
+							<ul>
+								<li><font size="5px">Readysaster: Hack for Resilience</font></li>
+								<li><font size="5px">KabantayNgBayan: The Procurement Hack</font></li>
+							</ul>
+						</li>
+						<li>Web Developers - PERSYA Philippines</li>
+						<li>We Speak - English, Filipino, HTML, CSS, Javascript, Java, Python...</li>
+						<li>2nd FOSS4G</li>
+					</ul>
 				</section>
 				<section>
-			
+					<h1>Who are you?</h1>
+					<ul>
+						<li>Researchers?</li>
+						<li>LGU?</li>
+						<li>Academe?</li>
+						<li>Students?</li>
+						<li>Spatial Scientists?</li>
+						<li>Non Developers?</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Outline</h1>
+					<ol>
+						<li>Introduction</li>
+						<li>Dev Machine</li>
+						<li>Flask Development</li>
+						<li>D3 Javascript Library</li>
+						<li>Cloud Deployment</li>
+						<li>Go Beyond</li>
+					</ol>
+				</section>
+		<!--Introduction - Data-->
+				<section>
+					<h1>Introduction</h1>
+				</section>
+				<section>
+					<h3>What is Data?</h3>
+					<ul>
+						<li>a set of values (qualitative or quantitative)</li>
+						<li>CSV, PDF, SHP, GEOTIFF, LiDAR, API, Raw Paper, ETC.</li>
+						<li>Closed vs Open</li>  
+						<li>Data vs Information</li>  
+					</ul>
+				</section>
+				<section>
+					<h3>Why do we need to visualize data?</h3>
+					<ul>
+						<li>Readable</li>
+						<li>Appreciation</li>
+						<li>Understanding</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Data Visualization</h3>
+					<ul>
+						<li>Paper or Digital</li>
+						<li>2D or 3D</li>
+						<li>Web/Mobile or Desktop</li>
+					</ul>
+				</section>
+				<section>
 					<p>
-						<font size="10px"><i>"The coolest thing to do with your data will be thought of by someone else"</i>
+						<font size="10px"><i>"The coolest thing to do with your data will be thought of by someone else"</i></font>
 					</p>
-						<small>Dr. Rufus Pollock</small>
-				
+						<small>Dr. Rufus Pollock</small>				
+				</section>
+				<!--Introduction - Flask and D3-->
+				<section>
+					<h1>Flask + D3 = Data Viz</h1>
+				</section>
+				<section>
+					<h2>What is Flask?</h2>
+						<ul>
+							<li>Python Web Framework</li>
+							<li>Single File Development</li>
+							<li>Fast Implementation</li>
+						</ul>				
+				</section>
+				<section>
+					<h2>D3 js (Data Driven Documents)</h2>
+						<ul>
+							<li>Javascript Library</li>
+							<li>Data Visualization</li>
+							<li>Dynamic</li>
+						</ul>				
+				</section>
+				<!--Development Machine-->
+				<section>
+					<h2>Development Machine</h2>
+				</section>
+				<section>
+					<h3>Setup and Requirements</h3>
+					<ol>
+						<li>python version 2.7
+							<p id="terminal">python -v </p>
+						</li>
+						<li>Installing Python Package Manager
+							<p id="terminal">[sudo] apt-get install python-pip</p>
+						</li>
+						<li> Installing Virtual Environment
+							<p id="terminal">[sudo] pip install --proxy http://proxy:port virtualenv</p>
+						</li>
+						<li> Creating and Activating Virtual Environment
+							<p id="terminal">virtualenv foss4gEnv</p>
+							<p id="terminal">source foss4gEnv/bin/activate</p>
+						</li>
+						<li> Installing Flask
+							<p id="terminal">(foss4gEnv)pip install --proxy http://proxy:port flask</p>
+						</li>
+					</ol>
+				</section>
+				<!--Flask Development-->
+				<section>
+					<h2>Flask Development</h2>
 				</section>
 			</div>
 
