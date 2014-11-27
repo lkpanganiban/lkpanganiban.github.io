@@ -16,6 +16,7 @@
 
 		<link rel="stylesheet" href="css/reveal.min.css">
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+		<!--<link rel="stylesheet" href="css/print/pdf.css">_--->
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="css/zenburn.css">
@@ -35,6 +36,9 @@
 				color:yellow;
 				font-size: 30px;
 
+			}
+			#directory{
+				height:400px;
 			}
 		</style>
 		<!--[if lt IE 9]>
@@ -180,6 +184,56 @@
 				<!--Flask Development-->
 				<section>
 					<h2>Flask Development</h2>
+				</section>
+				<section>
+					<h2>Project Implementation</h2>
+					<ul>
+						<li>Singe File</li>
+						<li>Multiple Files</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Directory Structure</h2>
+					<img src="img/flask_directory.png" id="directory"/>
+				</section>
+				<!--First Flask Application-->
+				<section>
+					<h3>First Flask Application</h3>
+				    <pre>
+				    <code data-trim>
+				    #run.py
+					from flask import Flask
+					app = Flask(__name__)
+
+					@app.route("/")
+					def home():
+					    return "Hello World!"
+
+					if __name__ == "__main__":
+					    app.debug = True
+					    app.run()
+				    </code>
+				    </pre>
+				    <p>terminal: <i>python run.py</i></p>
+				</section>
+				<!--Rendering Pages-->
+				<section>
+					<h3>Rendering Pages</h3>
+				    <pre>
+				    <code data-trim>
+				    #run.py
+					from flask import Flask, render_template
+					app = Flask(__name__)
+
+					@app.route("/")
+					def home():
+					    return render_template("index.html")
+
+					if __name__ == "__main__":
+					    app.debug = True
+					    app.run()
+				    </code>
+				    </pre>
 				</section>
 			</div>
 
