@@ -7,7 +7,7 @@
 		<title>FOSS4G 2014 - Flask and D3 Workshop</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+		<meta name="author" content="lkpanganiban and cbmamador">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -16,7 +16,19 @@
 
 		<link rel="stylesheet" href="css/reveal.min.css">
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
-		<!--<link rel="stylesheet" href="css/print/pdf.css">_--->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<!--<link rel="stylesheet" href="css/print/pdf.css">-->
+
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/d3.min.js"></script>
+
+		<!--bootstrap code-->
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+		<!--custom fonts-->
+		<link href='http://fonts.googleapis.com/css?family=Lobster|Open+Sans+Condensed:300,700,300italic' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Archivo+Narrow|Signika' rel='stylesheet' type='text/css'>
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="css/zenburn.css">
@@ -32,6 +44,75 @@
 			}
 		</script>
 		<style>
+			.reveal h1, #d3{
+				font-family: 'Lobster', cursive;
+				text-transform:none;
+				text-shadow:none;
+				line-height:1.2em;
+				color:#9BF0E9;
+				/*font-family: 'Open Sans Condensed', sans-serif;*/
+			}
+			.reveal h3, #authors{
+				color:#ED146F;
+				margin:0 auto;
+				font-size:5rem;
+				font-family: 'Open Sans Condensed', sans-serif;
+				letter-spacing:0.01;
+				width:70rem;
+			}
+			.reveal h2{
+				color:#CCFF00;			
+			}
+			#authors{
+				color:#CCFF00;
+				font-size:3rem;
+				line-height: 5rem;
+				letter-spacing: 0.2rem;
+			}
+			#about_list,#who_list,#out_list,#paper_list{
+				list-style: none;
+			}
+			#about_list li{
+				font-family: 'Signika', sans-serif;
+				line-height:3.5rem;
+			}
+			#who_list{
+				line-height: 5rem;
+				margin:0 auto;
+			}
+			#out_list li, #data_list li, #paper_list li{
+				line-height: 5rem;
+			}
+			#paper_list{
+				font-size:5rem;
+			}
+			#vis_data{
+				margin:0 auto;
+				color:#CCFF00;
+			}
+			#vis_data_list li{
+				font-size:5rem;
+				margin:0 auto;
+				line-height: 6rem;
+				list-style: none;
+			}
+			#h3_data{
+				color:#ED146F;
+				font-size: 10rem;
+			}
+			.formula{
+				font-size: 20rem;
+			}
+			#d3{
+				color:#CCFF00;
+				font-size:12rem;
+			}
+			#examples{
+				color:#64E14D;
+			}
+			.reveal .state-background{
+				background:rgba(19, 19, 19, 1);
+			}
 			#terminal {
 				color:yellow;
 				font-size: 30px;
@@ -59,15 +140,15 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>FOSS4G 2014</h1>
-					<h3>Data Visualization using D3 js and Flask</h3>
-					<p>
-						<small>Created by Charmyne Mamador & Luis Caezar Ian Panganiban</small>
+					<h1>foss4g 2014</h1>
+					<h3>Data Visualization using D3.js and Flask</h3>
+					<p id="authors">
+						Charmyne Mamador & Luis Caezar Ian Panganiban
 					</p>
 				</section>
 				<section>
 					<h2>About US</h2>
-					<ul>
+					<ul id="about_list">
 						<li>Licensed Geodetic Engineers</li>
 						<li>Tidal Current Energy Integrated Resource Assessment and Spatial Planning (Current)
 							<ul>
@@ -87,32 +168,32 @@
 				</section>
 				<section>
 					<h2>Who are you?</h2>
-					<ul>
-						<li>Researchers?</li>
-						<li>LGU?</li>
-						<li>Academe?</li>
-						<li>Students?</li>
-						<li>Spatial Scientists?</li>
-						<li>Non Developers?</li>
+					<ul id="who_list">
+						<li class="text-center">Researchers?</li>
+						<li class="text-center">LGU?</li>
+						<li class="text-center">Academe?</li>
+						<li class="text-center">Students?</li>
+						<li class="text-center">Spatial Scientists?</li>
+						<li class="text-center">Non Developers?</li>
 					</ul>
 				</section>
 				<section>
-					<h1>Outline</h1>
-					<ol>
-						<li>Introduction</li>
-						<li>Dev Machine</li>
-						<li>Flask Development</li>
-						<li>D3 Javascript Library</li>
-						<li>Go Beyond</li>
-					</ol>
+					<h2>Outline</h2>
+					<ul id="out_list">
+						<li class="text-center">Introduction</li>
+						<li class="text-center">Dev Machine</li>
+						<li class="text-center">Flask Development</li>
+						<li class="text-center">D3 Javascript Library</li>
+						<li class="text-center">Go Beyond</li>
+					</ul>
 				</section>
 		<!--Introduction - Data-->
 				<section>
-					<h1>Introduction</h1>
+					<h1>introduction</h1>
 				</section>
 				<section>
-					<h3>What is Data?</h3>
-					<ul>
+					<h2>What is Data?</h2>
+					<ul id="data_list">
 						<li>a set of values (qualitative or quantitative)</li>
 						<li>CSV, PDF, SHP, GEOTIFF, LiDAR, API, Raw Paper, ETC.</li>
 						<li>Closed vs Open</li>  
@@ -120,30 +201,30 @@
 					</ul>
 				</section>
 				<section>
-					<h3>Why do we need to visualize data?</h3>
-					<ul>
-						<li>Tables are not fun :((((</li>
-						<li>Relativity</li>
-						<li>Understanding</li>
+					<h2 class="text-center" id="vis_data">Why do we need to visualize data?</h2>
+					<ul id ="vis_data_list">
+						<li class="text-center">Readable</li>
+						<li class="text-center">Appreciation</li>
+						<li class="text-center">Understanding</li>
 					</ul>
 				</section>
 				<section>
-					<h3>Data Visualization</h3>
-					<ul>
-						<li>Paper or Digital</li>
-						<li>2D or 3D</li>
-						<li>Web/Mobile or Desktop</li>
+					<h3 id="h3_data">Data Visualization</h3>
+					<ul id="paper_list">
+						<li class="text-center">Paper or Digital</li>
+						<li class="text-center">2D or 3D</li>
+						<li class="text-center">Web/Mobile or Desktop</li>
 					</ul>
 				</section>
 				<section>
-					<p>
+					<p style="color:#9BF0E9;">
 						<font size="10px"><i>"The coolest thing to do with your data will be thought of by someone else"</i></font>
 					</p>
-						<small>Dr. Rufus Pollock</small>				
+						<small style="color:#ED146F;">Dr. Rufus Pollock</small>				
 				</section>
 				<!--Introduction - Flask and D3-->
 				<section>
-					<h1>Flask + D3 = Data Viz</h1>
+					<h1 class="formula"><span style="color:#9BF0E9;">Flask</span> <span style="color:white;">+</span> <span style="color:#ED146F;">D3<span> <span style="color:white;">=</span> <span style="color:#CCFF00;">Data Viz<span></h1>
 				</section>
 				<section>
 					<h2>What is Flask?</h2>
@@ -158,7 +239,7 @@
 						<ul>
 							<li>Javascript Library</li>
 							<li>Data Visualization</li>
-							<li>bring data to life</li>
+							<li>Dynamic</li>
 						</ul>				
 				</section>
 				<!--Development Machine-->
@@ -193,28 +274,13 @@
 				<section>
 					<h2>Project Implementation</h2>
 					<ul>
-						<li>Single File (small applications only)</li>
+						<li>Singe File</li>
 						<li>Multiple Files</li>
 					</ul>
 				</section>
 				<section>
 					<h2>Directory Structure</h2>
 					<img src="img/flask_directory.png" id="directory"/>
-				</section>
-				<!--File Structure-->
-				<section>
-					<h2>Single File Structure</h2>
-					<ul>
-						<li>templates - storage of all .html files</li>
-						<li>static - storage of all css, js, img files</li>
-						<ul>
-							<li>css - styling of pages</li>
-							<li>js - javascripts (interactivity)</li>
-							<li>img - image files</li>
-						</ul>
-						<li>run.py - deploys your application</li>
-					</ul>
-
 				</section>
 				<!--First Flask Application-->
 				<section>
@@ -227,7 +293,7 @@
 
 					@app.route("/")
 					def home():
-					    return "Hello FOSS4G 2014!"
+					    return "Hello World!"
 
 					if __name__ == "__main__":
 					    app.debug = True
@@ -256,26 +322,67 @@
 				    </pre>
 				</section>
 				<section>
-					<h3>Rendering Pages - Final Notes</h3>
-					<p>put all the html files in the templates folder</p>
-					<p>put all the css files in the css folder</p>
-					<p>put all the js files in the js folder</p>
-				</section>
-				<section>
-					<h3>Congratulations you have just created your first WebApp</h3>
-
+				<h2>Rendering Pages - Final Notes</h2>
+				<ul>
+					<li>put all the html files in the templates folder</li>
+					<li>put all the css files in the css folder</li>
+					<li>put all the js files in the js folder</li>
+				</ul>
+			
 				</section>
 				<!--D3 Sections-->
+				<section id ="full">
+					<h3 id="d3">Data Driven Documents</h3>
+				</section>
 				<section>
-					<h3>Data Driven Documents</h3>
+					<h2>D3 Overview</h2>
+					<p style="color:#FF8800;"><i>JavaScript library for manipulating documents based on data</i></p>
+					<p>Stanford University's Stanford Visualization Group</p>
+					<p style="color:#FF8800;"><i>Protovis</p>
+					<p>Mike Bostock</i></p>
+				</section>
+				<section>
+					<h1 class="formula"><span style="color:#9BF0E9;">_____</span> <span style="color:white;">+</span> <span style="color:#ED146F;">D3<span> <span style="color:white;">=</span> <span style="color:#CCFF00;">Data Viz<span></h1>
+				</section>
+				<section>
+					<h1 id ="examples">Examples</h1>
+				</section>
+				<section>
+					<a target="_blank" href="http://bl.ocks.org/mbostock/raw/4062045/8781145235fb469685c9147648423ca5e6f1342f/"><h3 style="color:#ED146F;line-height:10rem;">Force-Directed Graph</h3></a>
+					<a target="_blank" href="http://bl.ocks.org/mbostock/raw/4061961/"><h2>Bullet Charts</h2></a>
+					<a target="_blank" href="http://bl.ocks.org/kerryrodden/raw/7090426/"><h3 style="color:#FF8800;">Sequences Sunburst</h3></a>
+				</section>
+				<section>
+					<h1>Maps</h1>
+					<h2>Maps</h2>
+					<h3>Maps</h3>
+				</section>
+				<section>
+					<h3 style="color:#ED146F; font-size:10rem;">TODAY's<h3>
+					<h1>mini<h1>
+					<h2 style="font-size:10rem; letter-spacing:0.6rem;">project</h2>
+					<a target="_blank" href=""><button type="button" class="btn btn-warning" style="width:25rem;"><h3 style="width:10rem; color:white;">Peak!</h3></button></a>
+				</section>
+				<section>
+					<h1 style="color:#FF8800; font-size:10rem; text-transform:none;"><i>bit by bit</i></h1>
+					<p style="color:#F7FF0A;">Theme & Data</p>
+					<p>Map - with regional boundaries</p>
+					<p style="color:#F7FF0A;">Circle markers</p>
+					<p>Percentage Value</i></p>
+					<p style="color:#F7FF0A;">Events</p>
+				</section>
+				<section>
+					<h3 style="line-height:5rem;">Let's DO</h3>
+					<h2>some CARDIO</h2>
+					<h3 style="line-height:0rem; text-transform:none; font-family: 'Lobster', cursive; font-size:4rem; color:#FF8800;">(for the fingers)</h3>
 				</section>
 				<!--Go Beyond-->
 				<section>
-					<h3>Go Beyond...</h3>
+					<h2>Go Beyond...</h2>
 					<ul>
 						<li>Web Development - HTML, CSS, Javascript</li>
 						<li>Try working with dynamic data</li>
-						<li>3D Web Rendering (X3DOM)</li>
+						<li>3D Web Rendering </li>
 						<li>Application Deployment (Cloud)</li>
 					</ul>
 				</section>
