@@ -5,16 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charset="utf-8" />
         <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="lkpanganiban.com Full Atom Feed" />
+        <link href="/feeds/guides.atom.xml" type="application/atom+xml" rel="alternate" title="lkpanganiban.com Categories Atom Feed" />
         <!-- twitter card metadata -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="/images/ian.jpg">
 <meta name="twitter:site" content="@lkpanganiban">
-<meta name="twitter:title" content="CV">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Backup and Restore with PostgreSQL">
+<meta name="twitter:description" content="PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, arrays, etc. In the following post, I will demonstrate how you can backup and restore your PostgreSQL database.">
         <!-- OG Tags -->
-<meta property="og:url" content="/pages/cv/"/>
-<meta property="og:title" content="lkpanganiban.com | CV" />
-<meta property="og:description" content="" />
+<meta property="og:url" content="/2018/09/21/backup-and-restore-with-postgresql/"/>
+<meta property="og:title" content="lkpanganiban.com | Backup and Restore with PostgreSQL" />
+<meta property="og:description" content="PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, arrays, etc. In the following post, I will demonstrate how you can backup and restore your PostgreSQL database." />
         <!-- favicon -->
         <link rel="icon" type="image/png" href="/images/ian.png">
         <!-- moment.js for date formatting -->
@@ -45,6 +46,7 @@
             };
         </script>
 
+    <meta name="description" content="PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, arrays, etc. In the following post, I will demonstrate how you can backup and restore your PostgreSQL database." />
 
 
 </head>
@@ -55,9 +57,9 @@
             <a href="#menu" id="menu-link">more stuff</a>
             <nav id="menu">
                 <ul>
-                        <li class="active"><a href="/pages/cv/">cv</a></li>
+                        <li><a href="/pages/cv/">cv</a></li>
                         <li><a href="/tags">tags</a></li>
-                            <li><a href="/category/guides">guides</a></li>
+                            <li class="active"><a href="/category/guides">guides</a></li>
                 </ul>
             </nav>
         </header>
@@ -65,153 +67,35 @@
         <div class="page" role="main">
   <div class="article" role="article">
     <article>
+        <footer>
+            <a name="top"></a>
+            <p>
+              <time datetime=" 2018-09-21 20:04:00+08:00">
+                <script>document.write(moment('2018-09-21 20:04:00+08:00').format('LL'));</script>
+              </time>
+            </p>
+        </footer>
         <header>
           <h2>
-            CV
+            Backup and Restore with PostgreSQL
           </h2>
         </header>
       <div class="content">
-         <h1>Luis Caezar Ian K. Panganiban</h1>
-<h2>CORE COMPETENECIES</h2>
+         <p>PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, a
+rrays, etc. It also contains some backup and restore mechanism which you can use to safeguard your data. In the following section, I will demonstrate how you can backup and restore your PostgreSQL database.</p>
+<h2>Features</h2>
 <ul>
-<li>
-<p>A software developer with a solid background on Geographic Information Systems (GIS), Remote Sensing (RS), Python Programming, Machine Learning, and Cloud Development.</p>
-</li>
-<li>
-<p>Strong background in architecting, developing, and providing system solutions for geospatial products.</p>
-</li>
-<li>
-<p>Can collaborate and manage a team in an Agile and research oriented manner.</p>
-</li>
-<li>
-<p>Proficient in leveraging geospatial technologies (FOSS and proprietary) in research and development.</p>
-</li>
+<li>Backing up PostgreSQL with pg_dump</li>
 </ul>
-<h2>EXPERIENCE</h2>
-<h3>Geoscience Data Scientist</h3>
-<p><strong>Iraya Energies</strong></p>
-<p><em>October 2017 - Present</em></p>
+<div class="highlight"><pre><span></span>pg_dump name_of_database &gt; name_of_the_backup_file.bak
+</pre></div>
+
+
 <ul>
-<li>
-<p>Responsible for designing and managing internal and commercial geoscience infrastructure and database.</p>
-</li>
-<li>
-<p>Responsible for developing tools and algorithms for machine learning processes like visualization, optimization and analyses.</p>
-</li>
+<li>Restoring a PostgreSQL backup </li>
 </ul>
-<h3>Consultant</h3>
-<p><strong>Iraya Energies</strong></p>
-<p><em>April 2017 - September 2017</em></p>
-<ul>
-<li>
-<p>Developed tools for geoscientific resource data mining and database management.</p>
-</li>
-<li>
-<p>Created a prototype for the initial data management platform.</p>
-</li>
-</ul>
-<h3>WebGIS Specialist</h3>
-<p><strong>Sugar Regulatory Administration Yield Estimation System for Sugarcane (SRA YESS) Project</strong></p>
-<p><em>July 2016 - January 2017</em></p>
-<ul>
-<li>
-<p>Developed the WebGIS platform for the Sugar Regulatory Administration Yield Estimation System for Sugarcane (SRA YESS) Project</p>
-</li>
-<li>
-<p>Created technical documentations and manuals for managing and using the WebGIS platform.</p>
-</li>
-<li>
-<p>Conducted user interviews and user research for identifying features and requirements.</p>
-</li>
-</ul>
-<h3>WebGIS Specialist</h3>
-<p><strong>PHL-Microsat Project 3: Data Processing and Archiving Development</strong></p>
-<p><em>June 2015 - August 2017</em></p>
-<ul>
-<li>
-<p>Developed the data distribution platform of Diwata-1 images.</p>
-</li>
-<li>
-<p>Conducted usability surveys of the data distribution platform.</p>
-</li>
-</ul>
-<h3>Junior Applications Developer</h3>
-<p><strong>HZE Rover Surveying and Geomatics (HZERSG)</strong></p>
-<p><em>November 2015 - August 2016</em></p>
-<ul>
-<li>
-<p>Created the CARAGA Region Inter-Agency Database Management System.</p>
-</li>
-<li>
-<p>Conducted user training for the management and use of the database system.</p>
-</li>
-<li>
-<p>Created technical documentations and user manuals for managing and usage of the database system.</p>
-</li>
-</ul>
-<h3>WebGIS Specialist Consultant</h3>
-<p><strong>FilGeosolutions Inc</strong></p>
-<p><em>June 2015 - December 2015</em></p>
-<ul>
-<li>
-<p>Developed various tools for visualizing and managing geospatial data.</p>
-</li>
-<li>
-<p>Provided technical documentations and presentations for the various tools created.</p>
-</li>
-</ul>
-<h3>Science Research Specialist II</h3>
-<p><strong>Tidal Current Energy Integrated Resource Assessment and Spatial Planning Tool</strong></p>
-<p><em>April 2014 - April 2016</em></p>
-<ul>
-<li>
-<p>Developed the PhilSHORE platform a marine spatial planning tool for visualizing and managing tidal current data.</p>
-</li>
-<li>
-<p>Conducted fieldworks and consultations to various stakeholders in developing tidal current energy in the Philippines.</p>
-</li>
-<li>
-<p>Provided technical documentations and user manuals for managing and using the PhilSHORE platform.</p>
-</li>
-</ul>
-<h3>Web Developer</h3>
-<p><strong>Matabungkay Seaside Cottages</strong></p>
-<p><em>August 2015</em></p>
-<ul>
-<li>Created the Matabungkay Seaside Cottages website.</li>
-</ul>
-<h3>Web Developer</h3>
-<p><strong>PERSYA Philippines</strong></p>
-<p><em>October 2014</em></p>
-<ul>
-<li>Created the PERSYA Philippines website</li>
-</ul>
-<h3>Student Assistant</h3>
-<p><strong>SOS Project: 3D WebGIS of UP DILIMAN</strong></p>
-<p><em>April 2013 - January 2014</em></p>
-<ul>
-<li>
-<p>Designed the project’s website which will display a 3D Model of the University of the Philippines Diliman Campus and created the 3D models using SketchUp.</p>
-</li>
-<li>
-<p>Provided technical documentation for the developed tool.</p>
-</li>
-</ul>
-<h2>EDUCATION</h2>
-<h3>BS Geodetic Engineering</h3>
-<p><strong>University of the Philippines Diliman</strong></p>
-<p><em>2009 - 2014</em></p>
-<h3>Programmer of the Year 2014</h3>
-<p><strong>University of the Philippines Diliman - Department of Geodetic Engineering</strong></p>
-<h2>CERTIFICATION AND LICENSE</h2>
-<ul>
-<li>
-<p>Licensed Geodetic Engineer - PRC No. 0009248</p>
-</li>
-<li>
-<p>Coursera Machine Learning - License No. U66RPHA7K6K6</p>
-</li>
-</ul>
+<div class="highlight"><pre><span></span>psql empty_db_name &lt; name_of_the_backup_file.bak
+</pre></div>
       </div>
       <div class="back-to-top">
           <a href="#top">back to top</a>
