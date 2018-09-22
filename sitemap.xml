@@ -5,35 +5,42 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2018-09-21T22:37:40-00:00</lastmod>
+<lastmod>2018-09-22T08:05:17-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2018-09-21T22:37:40-00:00</lastmod>
+<lastmod>2018-09-22T08:05:17-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2018-09-21T22:37:40-00:00</lastmod>
+<lastmod>2018-09-22T08:05:17-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2018-09-21T22:37:40-00:00</lastmod>
+<lastmod>2018-09-22T08:05:17-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/pages/cv/</loc>
-<lastmod>2018-09-21T22:37:40-00:00</lastmod>
+<lastmod>2018-09-22T08:05:17-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.75</priority>
+</url>
+
+<url>
+<loc>/pages/contact/</loc>
+<lastmod>2018-09-22T08:05:17-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.75</priority>
 </url>
