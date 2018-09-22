@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>lkpanganiban.com - September 2018 archives</title>
+          <title>lkpanganiban.com</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charset="utf-8" />
         <link href="https://www.lkpanganiban.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="lkpanganiban.com Full Atom Feed" />
+        <link href="https://www.lkpanganiban.com/feeds/guides.atom.xml" type="application/atom+xml" rel="alternate" title="lkpanganiban.com Categories Atom Feed" />
         <!-- twitter card metadata -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.lkpanganiban.com/images/ian.jpg">
+<meta name="twitter:site" content="@lkpanganiban">
+<meta name="twitter:title" content="Backing up and Restoring Mongo DB">
+<meta name="twitter:description" content="Mongo DB is a type NoSQL database which treats your data like JSON-documents (key-value pair). In this post, I will be showing some steps in backing up and restoring a Mongo DB.">
         <!-- OG Tags -->
+<meta property="og:url" content="https://www.lkpanganiban.com/2018/09/22/backing-up-and-restoring-mongo-db/"/>
+<meta property="og:title" content="lkpanganiban.com | Backing up and Restoring Mongo DB" />
+<meta property="og:description" content="Mongo DB is a type NoSQL database which treats your data like JSON-documents (key-value pair). In this post, I will be showing some steps in backing up and restoring a Mongo DB." />
         <!-- favicon -->
         <link rel="icon" type="image/png" href="https://www.lkpanganiban.com/images/ian.png">
         <!-- moment.js for date formatting -->
@@ -42,6 +51,10 @@
                 background-repeat: no-repeat;
             }
         </style>
+
+    <meta name="description" content="Mongo DB is a type NoSQL database which treats your data like JSON-documents (key-value pair). In this post, I will be showing some steps in backing up and restoring a Mongo DB." />
+
+
 </head>
 <body>
     <div role="banner" id="masthead">
@@ -64,16 +77,47 @@
         </header>
     </div>
         <div class="page" role="main">
-<h1>Archives for September 2018</h1>
+  <div class="article" role="article">
+    <article>
+        <footer>
+            <a name="top"></a>
+            <p>
+              <time datetime=" 2018-09-22 12:15:00+08:00">
+                <script>document.write(moment('2018-09-22 12:15:00+08:00').format('LL'));</script>
+              </time>
+            </p>
+        </footer>
+        <header>
+          <h2>
+            Backing up and Restoring Mongo DB
+          </h2>
+        </header>
+      <div class="content">
+         <p>Mongo DB is a type NoSQL database which treats your data like JSON-
+documents (key-value pair). In this post, I will be showing some steps in backin
+g up and restoring a Mongo DB.</p>
+<p>We will use Mongo DB's built-in utility to backup and restore data.</p>
+<h2>Features</h2>
+<ul>
+<li>Dumping Mongo DB data</li>
+</ul>
+<div class="highlight"><pre><span></span>mongodump --db mongo-db-name --collection mongo-collection-name --out - | gzip &gt;  mongo-collection-name-backup.gz
+</pre></div>
 
-<dl>
-    <dt>Sat 22 September 2018</dt>
-    <dd><a href="https://www.lkpanganiban.com/2018/09/22/backing-up-and-restoring-mongo-db/">Backing up and Restoring Mongo DB</a></dd>
-    <dt>Fri 21 September 2018</dt>
-    <dd><a href="https://www.lkpanganiban.com/2018/09/21/backup-and-restore-with-postgresql/">Backup and Restore with PostgreSQL</a></dd>
-    <dt>Fri 21 September 2018</dt>
-    <dd><a href="https://www.lkpanganiban.com/2018/09/21/backing-up-and-restoring-elasticsearch-data-with-elasticdump/">Backing up and restoring Elasticsearch data with Elasticdump</a></dd>
-</dl>
+
+<ul>
+<li>Restoring Mongo DB data</li>
+</ul>
+<div class="highlight"><pre><span></span>gunzip -c mongo-collection-name.gz &gt; mongo-collection-name-backup.bson
+mongorestore --db mongo-db-name --collection mongo-collection-name mongo-collection-name-backup.bson
+</pre></div>
+      </div>
+      <div class="back-to-top">
+          <a href="#top">back to top</a>
+      </div>
+    </article>
+  </div>
+<!-- end article -->
                 <footer>
                     <p>© <script>document.write(moment().format('YYYY'));</script> Ian Panganiban</p>
  

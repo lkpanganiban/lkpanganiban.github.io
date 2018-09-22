@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>lkpanganiban.com</title><link href="https://www.lkpanganiban.com/" rel="alternate"></link><link href="https://www.lkpanganiban.com/feeds/all-en.atom.xml" rel="self"></link><id>https://www.lkpanganiban.com/</id><updated>2018-09-21T20:04:00+08:00</updated><entry><title>Backup and Restore with PostgreSQL</title><link href="https://www.lkpanganiban.com/2018/09/21/backup-and-restore-with-postgresql/" rel="alternate"></link><published>2018-09-21T20:04:00+08:00</published><updated>2018-09-21T20:04:00+08:00</updated><author><name>Ian Panganiban</name></author><id>tag:www.lkpanganiban.com,2018-09-21:/2018/09/21/backup-and-restore-with-postgresql/</id><summary type="html">&lt;p&gt;PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, a
+<feed xmlns="http://www.w3.org/2005/Atom"><title>lkpanganiban.com</title><link href="https://www.lkpanganiban.com/" rel="alternate"></link><link href="https://www.lkpanganiban.com/feeds/all-en.atom.xml" rel="self"></link><id>https://www.lkpanganiban.com/</id><updated>2018-09-22T12:15:00+08:00</updated><entry><title>Backing up and Restoring Mongo DB</title><link href="https://www.lkpanganiban.com/2018/09/22/backing-up-and-restoring-mongo-db/" rel="alternate"></link><published>2018-09-22T12:15:00+08:00</published><updated>2018-09-22T12:15:00+08:00</updated><author><name>Ian Panganiban</name></author><id>tag:www.lkpanganiban.com,2018-09-22:/2018/09/22/backing-up-and-restoring-mongo-db/</id><summary type="html">&lt;p&gt;Mongo DB is a type NoSQL database which treats your data like JSON-
+documents (key-value pair). In this post, I will be showing some steps in backin
+g up and restoring a Mongo DB.&lt;/p&gt;
+&lt;p&gt;We will use Mongo DB's built-in utility to backup and restore data.&lt;/p&gt;
+&lt;h2&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Dumping Mongo DB …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;Mongo DB is a type NoSQL database which treats your data like JSON-
+documents (key-value pair). In this post, I will be showing some steps in backin
+g up and restoring a Mongo DB.&lt;/p&gt;
+&lt;p&gt;We will use Mongo DB's built-in utility to backup and restore data.&lt;/p&gt;
+&lt;h2&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Dumping Mongo DB data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mongodump --db mongo-db-name --collection mongo-collection-name --out - | gzip &amp;gt;  mongo-collection-name-backup.gz
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Restoring Mongo DB data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gunzip -c mongo-collection-name.gz &amp;gt; mongo-collection-name-backup.bson
+mongorestore --db mongo-db-name --collection mongo-collection-name mongo-collection-name-backup.bson
+&lt;/pre&gt;&lt;/div&gt;</content></entry><entry><title>Backup and Restore with PostgreSQL</title><link href="https://www.lkpanganiban.com/2018/09/21/backup-and-restore-with-postgresql/" rel="alternate"></link><published>2018-09-21T20:04:00+08:00</published><updated>2018-09-21T20:04:00+08:00</updated><author><name>Ian Panganiban</name></author><id>tag:www.lkpanganiban.com,2018-09-21:/2018/09/21/backup-and-restore-with-postgresql/</id><summary type="html">&lt;p&gt;PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, a
 rrays, etc. It also contains some backup and restore mechanism which you can use to safeguard your data. In the following section, I will demonstrate how you can backup …&lt;/p&gt;</summary><content type="html">&lt;p&gt;PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, a
 rrays, etc. It also contains some backup and restore mechanism which you can use to safeguard your data. In the following section, I will demonstrate how you can backup and restore your PostgreSQL database.&lt;/p&gt;
 &lt;h2&gt;Features&lt;/h2&gt;
