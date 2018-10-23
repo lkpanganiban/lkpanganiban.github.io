@@ -6,18 +6,18 @@
 &lt;li&gt;Install Virtualbox and Vagrant for windows. &lt;em&gt;You may need to restart your machine after installing vagrant.&lt;/em&gt; &lt;a href="https://www.vagrantup.com/downloads.html"&gt;Vagarant Installer&lt;/a&gt; &lt;a href="https://www.virtualbox.org/wiki/Downloads"&gt;Virtualbox Installer&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Install vagrant to the WSL environment. &lt;em&gt;The version of your vagrant must be the same as the version you have installed in windows.&lt;/em&gt;&lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;In your WSL terminal, configure the following WSL environment variables:
-    &lt;code&gt;export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
-    export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
-    export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/e/Development"&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In your WSL terminal, configure the following WSL environment variables:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
+export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/e/Development"&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;In your Vagrantfile, add the &lt;code&gt;v.customize&lt;/code&gt; line in the &lt;code&gt;config.vm.provider&lt;/code&gt;:
-    &lt;code&gt;config.vm.provider "virtualbox" do |v|
-        v.memory = 1024
-        v.cpus = 1
-        v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
-    end&lt;/code&gt; &lt;/p&gt;
+&lt;p&gt;In your Vagrantfile, add the &lt;code&gt;v.customize&lt;/code&gt; line in the &lt;code&gt;config.vm.provider&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 1
+    v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+end&lt;/code&gt; &lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;You can now run vagrant with WSL.&lt;/p&gt;
