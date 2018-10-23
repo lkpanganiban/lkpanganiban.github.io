@@ -13,7 +13,8 @@ export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/e/Development"&lt;/code&g
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;In your Vagrantfile, add the &lt;code&gt;v.customize&lt;/code&gt; line in the &lt;code&gt;config.vm.provider&lt;/code&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;config.vm.provider "virtualbox" do |v|
+&lt;p&gt;&lt;code&gt;ruby
+config.vm.provider "virtualbox" do |v|
     v.memory = 1024
     v.cpus = 1
     v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
