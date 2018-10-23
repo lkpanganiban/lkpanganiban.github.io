@@ -5,27 +5,23 @@
 &lt;li&gt;Configure and setup the Windows Subsystem for Linux. Here is the link for the in-depth setup and configuration of WSL. &lt;a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10"&gt;Setup WSL in Windows 10&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Install Virtualbox and Vagrant for windows. &lt;em&gt;You may need to restart your machine after installing vagrant.&lt;/em&gt; &lt;a href="https://www.vagrantup.com/downloads.html"&gt;Vagarant Installer&lt;/a&gt; &lt;a href="https://www.virtualbox.org/wiki/Downloads"&gt;Virtualbox Installer&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Install vagrant to the WSL environment. &lt;em&gt;The version of your vagrant must be the same as the version you have installed in windows.&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;In your WSL terminal, configure the following WSL environment variables:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS=&amp;quot;1&amp;quot;
-export PATH=&amp;quot;$PATH:/mnt/c/Program Files/Oracle/VirtualBox&amp;quot;
-export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH=&amp;quot;/mnt/e/Development&amp;quot;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;ol&gt;
-&lt;li&gt;In your Vagrantfile, add the &lt;code&gt;v.customize&lt;/code&gt; line in the &lt;code&gt;config.vm.provider&lt;/code&gt;:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  config.vm.provider &amp;quot;virtualbox&amp;quot; do |v|
-    v.memory = 1024
-    v.cpus = 1
-    v.customize [ &amp;quot;modifyvm&amp;quot;, :id, &amp;quot;--uartmode1&amp;quot;, &amp;quot;disconnected&amp;quot; ]
-  end
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;ol&gt;
-&lt;li&gt;You can now run vagrant with WSL.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In your WSL terminal, configure the following WSL environment variables:
+    &lt;code&gt;export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+    export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
+    export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/e/Development"&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In your Vagrantfile, add the &lt;code&gt;v.customize&lt;/code&gt; line in the &lt;code&gt;config.vm.provider&lt;/code&gt;:
+    &lt;code&gt;config.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+        v.cpus = 1
+        v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+    end&lt;/code&gt; &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You can now run vagrant with WSL.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;</content></entry><entry><title>Backing up and Restoring Mongo DB</title><link href="https://www.lkpanganiban.com/2018/09/22/backing-up-and-restoring-mongo-db/" rel="alternate"></link><published>2018-09-22T12:15:00+08:00</published><updated>2018-09-22T12:15:00+08:00</updated><author><name>Ian Panganiban</name></author><id>tag:www.lkpanganiban.com,2018-09-22:/2018/09/22/backing-up-and-restoring-mongo-db/</id><summary type="html">&lt;p&gt;Mongo DB is a type NoSQL database which treats your data like JSON-
 documents (key-value pair). In this post, I will be showing some steps in backin
 g up and restoring a Mongo DB.&lt;/p&gt;

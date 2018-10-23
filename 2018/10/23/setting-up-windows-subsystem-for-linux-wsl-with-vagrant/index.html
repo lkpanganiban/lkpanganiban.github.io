@@ -99,27 +99,23 @@
 <li>Configure and setup the Windows Subsystem for Linux. Here is the link for the in-depth setup and configuration of WSL. <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Setup WSL in Windows 10</a></li>
 <li>Install Virtualbox and Vagrant for windows. <em>You may need to restart your machine after installing vagrant.</em> <a href="https://www.vagrantup.com/downloads.html">Vagarant Installer</a> <a href="https://www.virtualbox.org/wiki/Downloads">Virtualbox Installer</a></li>
 <li>Install vagrant to the WSL environment. <em>The version of your vagrant must be the same as the version you have installed in windows.</em></li>
-<li>In your WSL terminal, configure the following WSL environment variables:</li>
-</ol>
-<div class="highlight"><pre><span></span>export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS=&quot;1&quot;
-export PATH=&quot;$PATH:/mnt/c/Program Files/Oracle/VirtualBox&quot;
-export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH=&quot;/mnt/e/Development&quot;
-</pre></div>
-
-
-<ol>
-<li>In your Vagrantfile, add the <code>v.customize</code> line in the <code>config.vm.provider</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span>  config.vm.provider &quot;virtualbox&quot; do |v|
-    v.memory = 1024
-    v.cpus = 1
-    v.customize [ &quot;modifyvm&quot;, :id, &quot;--uartmode1&quot;, &quot;disconnected&quot; ]
-  end
-</pre></div>
-
-
-<ol>
-<li>You can now run vagrant with WSL.</li>
+<li>
+<p>In your WSL terminal, configure the following WSL environment variables:
+    <code>export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+    export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
+    export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/e/Development"</code></p>
+</li>
+<li>
+<p>In your Vagrantfile, add the <code>v.customize</code> line in the <code>config.vm.provider</code>:
+    <code>config.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+        v.cpus = 1
+        v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+    end</code> </p>
+</li>
+<li>
+<p>You can now run vagrant with WSL.</p>
+</li>
 </ol>
       </div>
       <div class="back-to-top">
