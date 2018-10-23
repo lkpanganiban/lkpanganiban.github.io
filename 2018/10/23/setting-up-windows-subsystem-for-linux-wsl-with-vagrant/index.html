@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>lkpanganiban.com</title>
+          <title>lkpanganiban.com</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charset="utf-8" />
         <link href="https://www.lkpanganiban.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="lkpanganiban.com Full Atom Feed" />
         <link href="https://www.lkpanganiban.com/feeds/guides.atom.xml" type="application/atom+xml" rel="alternate" title="lkpanganiban.com Categories Atom Feed" />
         <!-- twitter card metadata -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.lkpanganiban.com/images/ian.jpg">
+<meta name="twitter:site" content="@lkpanganiban">
+<meta name="twitter:title" content="Setting up Windows Subsystem for Linux (WSL) with Vagrant">
+<meta name="twitter:description" content="Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide...">
         <!-- OG Tags -->
-<meta property="og:url" content="https://www.lkpanganiban.com/category/guides"/>
-<meta property="og:title" content="lkpanganiban.com | guides" />
+<meta property="og:url" content="https://www.lkpanganiban.com/2018/10/23/setting-up-windows-subsystem-for-linux-wsl-with-vagrant/"/>
+<meta property="og:title" content="lkpanganiban.com | Setting up Windows Subsystem for Linux (WSL) with Vagrant" />
+<meta property="og:description" content="Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide..." />
         <!-- favicon -->
         <link rel="icon" type="image/png" href="https://www.lkpanganiban.com/images/ian.png">
         <!-- moment.js for date formatting -->
@@ -45,6 +51,10 @@
                 background-repeat: no-repeat;
             }
         </style>
+
+    <meta name="description" content="Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide..." />
+
+
 </head>
 <body>
     <div role="banner" id="masthead">
@@ -67,114 +77,58 @@
         </header>
     </div>
         <div class="page" role="main">
-<div class="page-title">
-    <h1>guides</h1>
-</div>
-<div class="articles">
-    <ol>
-        <li>
-            <article>
+  <div class="article" role="article">
+    <article>
+        <footer>
+            <a name="top"></a>
+            <p>
+              <time datetime=" 2018-10-23 08:00:00+08:00">
+                <script>document.write(moment('2018-10-23 08:00:00+08:00').format('LL'));</script>
+              </time>
+            </p>
+        </footer>
+        <header>
+          <h2>
+            Setting up Windows Subsystem for Linux (WSL) with Vagrant
+          </h2>
+        </header>
+      <div class="content">
+         <p>Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide will just go through the different steps in configuring this development environment.</p>
+<h2>Steps</h2>
+<ol>
+<li>Configure and setup the Windows Subsystem for Linux. Here is the link for the in-depth setup and configuration of WSL. <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Setup WSL in Windows 10</a></li>
+<li>Install Virtualbox and Vagrant for windows. <em>You may need to restart your machine after installing vagrant.</em> <a href="https://www.vagrantup.com/downloads.html">Vagarant Installer</a> <a href="https://www.virtualbox.org/wiki/Downloads">Virtualbox Installer</a></li>
+<li>Install vagrant to the WSL environment. <em>The version of your vagrant must be the same as the version you have installed in windows.</em></li>
+<li>In your WSL terminal, configure the following WSL environment variables:</li>
+</ol>
+<div class="highlight"><pre><span></span>export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS=&quot;1&quot;
+export PATH=&quot;$PATH:/mnt/c/Program Files/Oracle/VirtualBox&quot;
+export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH=&quot;/mnt/e/Development&quot;
+</pre></div>
+
+
+<ol>
+<li>In your Vagrantfile, add the <code>v.customize</code> line in the <code>config.vm.provider</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span>  config.vm.provider &quot;virtualbox&quot; do |v|
+    v.memory = 1024
+    v.cpus = 1
+    v.customize [ &quot;modifyvm&quot;, :id, &quot;--uartmode1&quot;, &quot;disconnected&quot; ]
+  end
+</pre></div>
+
+
+<ol>
+<li>You can now run vagrant with WSL.</li>
+</ol>
+      </div>
+      <div class="back-to-top">
+          <a href="#top">back to top</a>
+      </div>
+    </article>
+  </div>
+<!-- end article -->
                 <footer>
-                     <p>
-                        <time datetime="2018-10-23 08:00:00+08:00">
-                            <script>document.write(moment('2018-10-23 08:00:00+08:00').format('LL'));</script>
-                        </time>
-                                in <a href="https://www.lkpanganiban.com/category/guides"><span class="category-tag">guides</span></a>
-                    </p>
-                </footer>
-                <header>
-                    <a href="https://www.lkpanganiban.com/2018/10/23/setting-up-windows-subsystem-for-linux-wsl-with-vagrant/">
-                        <h2>Setting up Windows Subsystem for Linux (WSL) with Vagrant</h2>
-                    </a>
-                </header>
-                <div class="summary">Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide... </div>
-                <div class="tags">
-                    <ul class="tags">
-                    </ul>
-                </div>
-                <a href="https://www.lkpanganiban.com/2018/10/23/setting-up-windows-subsystem-for-linux-wsl-with-vagrant/">
-                    <p class="readmore">Read more...</p>
-                </a>
-            </article>
-        </li>
-        <li>
-            <article>
-                <footer>
-                     <p>
-                        <time datetime="2018-09-22 12:15:00+08:00">
-                            <script>document.write(moment('2018-09-22 12:15:00+08:00').format('LL'));</script>
-                        </time>
-                                in <a href="https://www.lkpanganiban.com/category/guides"><span class="category-tag">guides</span></a>
-                    </p>
-                </footer>
-                <header>
-                    <a href="https://www.lkpanganiban.com/2018/09/22/backing-up-and-restoring-mongo-db/">
-                        <h2>Backing up and Restoring Mongo DB</h2>
-                    </a>
-                </header>
-                <div class="summary">Mongo DB is a type NoSQL database which treats your data like JSON-documents (key-value pair). In this post, I will be showing some steps in backing up and restoring a Mongo DB. </div>
-                <div class="tags">
-                    <ul class="tags">
-                    </ul>
-                </div>
-                <a href="https://www.lkpanganiban.com/2018/09/22/backing-up-and-restoring-mongo-db/">
-                    <p class="readmore">Read more...</p>
-                </a>
-            </article>
-        </li>
-        <li>
-            <article>
-                <footer>
-                     <p>
-                        <time datetime="2018-09-21 20:04:00+08:00">
-                            <script>document.write(moment('2018-09-21 20:04:00+08:00').format('LL'));</script>
-                        </time>
-                                in <a href="https://www.lkpanganiban.com/category/guides"><span class="category-tag">guides</span></a>
-                    </p>
-                </footer>
-                <header>
-                    <a href="https://www.lkpanganiban.com/2018/09/21/backup-and-restore-with-postgresql/">
-                        <h2>Backup and Restore with PostgreSQL</h2>
-                    </a>
-                </header>
-                <div class="summary">PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, arrays, etc. In the following post, I will demonstrate how you can backup and restore your PostgreSQL database. </div>
-                <div class="tags">
-                    <ul class="tags">
-                    </ul>
-                </div>
-                <a href="https://www.lkpanganiban.com/2018/09/21/backup-and-restore-with-postgresql/">
-                    <p class="readmore">Read more...</p>
-                </a>
-            </article>
-        </li>
-        <li>
-            <article>
-                <footer>
-                     <p>
-                        <time datetime="2018-09-21 19:17:00+08:00">
-                            <script>document.write(moment('2018-09-21 19:17:00+08:00').format('LL'));</script>
-                        </time>
-                                in <a href="https://www.lkpanganiban.com/category/guides"><span class="category-tag">guides</span></a>
-                    </p>
-                </footer>
-                <header>
-                    <a href="https://www.lkpanganiban.com/2018/09/21/backing-up-and-restoring-elasticsearch-data-with-elasticdump/">
-                        <h2>Backing up and restoring Elasticsearch data with Elasticdump</h2>
-                    </a>
-                </header>
-                <div class="summary">Elasticsearch is a type NoSQL database which allows you to store unstructured data. It is highly performant and scalable. It allows you to implement full text searches and aggregations. This is very useful when dealing with large amounts of data. In the following post, I will use `elasticdump` to backup and restore Elasticsearch data. </div>
-                <div class="tags">
-                    <ul class="tags">
-                    </ul>
-                </div>
-                <a href="https://www.lkpanganiban.com/2018/09/21/backing-up-and-restoring-elasticsearch-data-with-elasticdump/">
-                    <p class="readmore">Read more...</p>
-                </a>
-            </article>
-        </li>
-    </ol>
-    
-</div>                <footer>
                     <p>© <script>document.write(moment().format('YYYY'));</script> Ian Panganiban</p>
  
                     <p><i>"Brutal"</i> Pelican Theme</p>
