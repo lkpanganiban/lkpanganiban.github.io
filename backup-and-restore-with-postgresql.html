@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" itemscope itemtype="http://schema.org/Person">
+<head>
+            <meta charset="utf-8">
+        <!-- Site Meta Data -->
+        <title>Backup and Restore with PostgreSQL</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Ian Panganiban">
+
+        <link rel="shortcut icon" href="https://www.lkpanganiban.com/theme/images/icons/favicon.png">
+
+        <!-- schema.org -->
+        <meta itemprop="name" content="lkpanganiban.com">
+        <meta itemprop="image" content="">
+        <meta itemprop="description" content="">
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <!-- Style Meta Data -->
+        <link rel="stylesheet" href="https://www.lkpanganiban.com/theme/css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="https://www.lkpanganiban.com/theme/css/pygments.css" type="text/css"/>
+
+        <!-- Feed Meta Data -->
+
+        <!-- Twitter Feed -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:image" content="">
+
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:url" content="https://www.lkpanganiban.com/backup-and-restore-with-postgresql.html">
+    <meta name="twitter:title" content="lkpanganiban.com ~ Backup and Restore with PostgreSQL">
+    <meta name="twitter:description" content="PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, a rrays, etc. It also contains some backup and restore mechanism which you can use to safeguard your data. In the following section, I will demonstrate how you can backup …">
+
+    <!-- Facebook Meta Data -->
+    <meta property="og:title" content="lkpanganiban.com ~ Backup and Restore with PostgreSQL"/>
+    <meta property="og:description" content="PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, a rrays, etc. It also contains some backup and restore mechanism which you can use to safeguard your data. In the following section, I will demonstrate how you can backup …"/>
+    <meta property="og:image" content=""/>
+</head>
+
+<body>
+<!-- Sidebar -->
+<aside>
+    <center><a href="https://www.lkpanganiban.com"><img id="avatar" src="https://www.lkpanganiban.com/images/ian.jpg"></a></center>
+    <h1>lkpanganiban.com</h1>
+        <p>Geo Programmer</p>
+    <br>
+
+
+    <nav class="nav">
+        <ul class="list-bare">
+
+
+                <li><a class="nav__link" href="https://www.lkpanganiban.com/pages/cv.html">CV</a></li>
+                <li><a class="nav__link" href="https://www.lkpanganiban.com/pages/projects.html">Projects</a></li>
+
+        </ul>
+    </nav>
+
+    <p class="social">
+                <a href="https://www.linkedin.com/in/ian-panganiban/" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/linkedin.png"></a>
+                <a href="https://github.com/lkpanganiban" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/github.png"></a>
+                <a href="https://twitter.com/lkpanganiban" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/twitter.png"></a>
+    </p>
+
+        <h2>Categories</h2>
+        <ul class="navbar">
+                <li class="active"><a
+                        href="https://www.lkpanganiban.com/category/guides.html">guides</a></li>
+        </ul>
+
+
+</aside>
+
+<!-- Content -->
+<article>
+    <section id="content">
+        <article>
+            <h2 class="post_title post_detail"><a href="https://www.lkpanganiban.com/backup-and-restore-with-postgresql.html" rel="bookmark"
+                                                  title="Permalink to Backup and Restore with PostgreSQL">Backup and Restore with PostgreSQL</a></h2>
+            <div class="entry-content blog-post">
+                <p>PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, a
+rrays, etc. It also contains some backup and restore mechanism which you can use to safeguard your data. In the following section, I will demonstrate how you can backup and restore your PostgreSQL database.</p>
+<h2>Features</h2>
+<ul>
+<li>
+<p>Backing up PostgreSQL with pg_dump
+    <code>export PGPASSWORD="&lt;password&gt;" | pg_dump -c -h &lt;postgresql-host&gt; -U &lt;user&gt; -d &lt;database-name&gt; | gzip &gt; ~/&lt;path&gt;/&lt;database-name&gt;.sql.gz</code></p>
+</li>
+<li>
+<p>Restoring a PostgreSQL backup 
+    <code>export PGPASSWORD="&lt;password&gt;" | pg_restore -c -h &lt;postgresql-host&gt; -U &lt;user&gt; -d &lt;database-name&gt; [dumpfile_name].dump</code></p>
+</li>
+</ul>
+            </div>
+            <div class="post_list">
+                <span>By </span>
+                <a href="https://www.lkpanganiban.com/author/ian-panganiban.html">@Ian Panganiban</a>
+                <span> in </span>
+                <span class="post_category"><a href="https://www.lkpanganiban.com/category/guides.html" rel="bookmark"
+                                               title="Permalink to guides">[ guides ]</a></span>
+                <span class="post_date">Fri 21 September 2018</span>
+                <div><span>Tags : </span>
+                            <span><a href="https://www.lkpanganiban.com/tag/postgresql.html">#postgresql, </a></span>
+                </div>
+
+                <div class="entry-social">
+                    <span class="mail"><a
+                        href="mailto:?subject=Backup and Restore with PostgreSQL&amp;body=Viens découvrir un article à propos de [Backup and Restore with PostgreSQL] sur le site de Ian Panganiban. https://www.lkpanganiban.com/backup-and-restore-with-postgresql.html"
+                        title="Share by Email" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/mail-s.png"></a></span>
+
+                        <a target="_blank" title="Linkedin"
+                        href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.lkpanganiban.com/backup-and-restore-with-postgresql.html&title=Backup and Restore with PostgreSQL"
+                        rel="nofollow"
+                        onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img
+                             src="https://www.lkpanganiban.com/theme/images/icons/linkedin-s.png"></a>
+ 
+                    <span class="twitter"><a target="_blank" rel="nofollow"
+                                             onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"
+                                             title="Twitter"
+                                             href="https://twitter.com/share?url=https://www.lkpanganiban.com/backup-and-restore-with-postgresql.html&text=Backup and Restore with PostgreSQL&via="><img
+                            src="https://www.lkpanganiban.com/theme/images/icons/twitter-s.png"></a></span>
+
+
+                </div>
+            </div>
+        </article>
+    </section>
+</article>
+
+<!-- Footer -->
+    <footer>
+        <p>
+            Blog powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>.
+            Theme <a href="https://github.com/parbhat/pelican-blue">Pelican-Blue</a> by <a
+                href="https://parbhatpuri.com/">@parbhat</a>.
+        </p>
+    </footer>
+
+
+</body>
+</html>
