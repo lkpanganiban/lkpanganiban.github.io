@@ -3,7 +3,7 @@
 <head>
             <meta charset="utf-8">
         <!-- Site Meta Data -->
-        <title>Setting up Windows Subsystem for Linux (WSL) with Vagrant</title>
+        <title>A thing called MLOps</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="Ian Panganiban">
@@ -28,13 +28,13 @@
         <meta name="twitter:image" content="">
 
     <meta name="twitter:creator" content="">
-    <meta name="twitter:url" content="https://www.lkpanganiban.com/setting-up-windows-subsystem-for-linux-wsl-with-vagrant.html">
-    <meta name="twitter:title" content="lkpanganiban.com ~ Setting up Windows Subsystem for Linux (WSL) with Vagrant">
-    <meta name="twitter:description" content="Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide will just go …">
+    <meta name="twitter:url" content="https://www.lkpanganiban.com/a-thing-called-mlops.html">
+    <meta name="twitter:title" content="lkpanganiban.com ~ A thing called MLOps">
+    <meta name="twitter:description" content="In the ML/AI development space, there is what they call MLOps. It has parallels and mirrors DevOps which is widely known and implemented in the software development space. They both have the same purpose of delivering software reliably and sustainably. Something must be said though, that both of these …">
 
     <!-- Facebook Meta Data -->
-    <meta property="og:title" content="lkpanganiban.com ~ Setting up Windows Subsystem for Linux (WSL) with Vagrant"/>
-    <meta property="og:description" content="Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide will just go …"/>
+    <meta property="og:title" content="lkpanganiban.com ~ A thing called MLOps"/>
+    <meta property="og:description" content="In the ML/AI development space, there is what they call MLOps. It has parallels and mirrors DevOps which is widely known and implemented in the software development space. They both have the same purpose of delivering software reliably and sustainably. Something must be said though, that both of these …"/>
     <meta property="og:image" content=""/>
 </head>
 
@@ -68,9 +68,9 @@
 
         <h2>Categories</h2>
         <ul class="navbar">
-                <li><a
-                        href="https://www.lkpanganiban.com/category/blog.html">blog</a></li>
                 <li class="active"><a
+                        href="https://www.lkpanganiban.com/category/blog.html">blog</a></li>
+                <li><a
                         href="https://www.lkpanganiban.com/category/guides.html">guides</a></li>
         </ul>
 
@@ -81,49 +81,33 @@
 <article>
     <section id="content">
         <article>
-            <h2 class="post_title post_detail"><a href="https://www.lkpanganiban.com/setting-up-windows-subsystem-for-linux-wsl-with-vagrant.html" rel="bookmark"
-                                                  title="Permalink to Setting up Windows Subsystem for Linux (WSL) with Vagrant">Setting up Windows Subsystem for Linux (WSL) with Vagrant</a></h2>
+            <h2 class="post_title post_detail"><a href="https://www.lkpanganiban.com/a-thing-called-mlops.html" rel="bookmark"
+                                                  title="Permalink to A thing called MLOps">A thing called MLOps</a></h2>
             <div class="entry-content blog-post">
-                <p>Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide will just go through the different steps in configuring this development environment.</p>
-<h2>Steps</h2>
-<ol>
-<li>Configure and setup the Windows Subsystem for Linux. Here is the link for the in-depth setup and configuration of WSL. <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Setup WSL in Windows 10</a></li>
-<li>Install Virtualbox and Vagrant for windows. <em>You may need to restart your machine after installing vagrant.</em> <a href="https://www.vagrantup.com/downloads.html">Vagarant Installer</a> <a href="https://www.virtualbox.org/wiki/Downloads">Virtualbox Installer</a></li>
-<li>Install vagrant to the WSL environment. <em>The version of your vagrant must be the same as the version you have installed in windows.</em></li>
-<li>
-<p>In your WSL terminal, configure the following WSL environment variables:</p>
-<p><code>export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
-export PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"
-export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/e/Development"</code></p>
-</li>
-<li>
-<p>In your Vagrantfile, add the <code>v.customize</code> line in the <code>config.vm.provider</code>: </p>
-<p><code>v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]</code></p>
-</li>
-<li>
-<p>You can now run vagrant with WSL.</p>
-</li>
-</ol>
+                <p>In the ML/AI development space, there is what they call MLOps. It has parallels and mirrors DevOps which is widely known and implemented in the software development space. They both have the same purpose of delivering software reliably and sustainably. Something must be said though, that both of these practices require resources and skills that span multiple disciplines and roles.</p>
+<p>The tooling and principles between DevOps and MLOps even though they have similarities are different from each other. Hence you cannot assume that DevOps teams can also do MLOps since they have different goals and objectives, but you must ensure that there is an intersection between them.</p>
+<p>If you are an organization that deals with both ML and software, you need to be efficient in both DevOps and MLOps, and you need multiple teams to handle them. That is why in some organizations if they start as a software development company, they focus on DevOps and move into MLOps when they integrate AI/ML into their products as you can see with big tech. Or if they are an AI/ML company, they start with MLOps and then move into DevOps when they begin distributing their models into production. In any case, if you are starting either MLOps or DevOps, it is important to master one first before moving to another to ensure focus and alignment throughout the organization.</p>
+<p><a href="https://devops.com/mlops-vs-devops-whats-the-difference/">https://devops.com/mlops-vs-devops-whats-the-difference/</a></p>
             </div>
             <div class="post_list">
                 <span>By </span>
                 <a href="https://www.lkpanganiban.com/author/ian-panganiban.html">@Ian Panganiban</a>
                 <span> in </span>
-                <span class="post_category"><a href="https://www.lkpanganiban.com/category/guides.html" rel="bookmark"
-                                               title="Permalink to guides">[ guides ]</a></span>
-                <span class="post_date">Tue 23 October 2018</span>
+                <span class="post_category"><a href="https://www.lkpanganiban.com/category/blog.html" rel="bookmark"
+                                               title="Permalink to blog">[ blog ]</a></span>
+                <span class="post_date">Sat 25 February 2023</span>
                 <div><span>Tags : </span>
-                            <span><a href="https://www.lkpanganiban.com/tag/wsl.html">#wsl, </a></span>
+                            <span><a href="https://www.lkpanganiban.com/tag/mlops.html">#mlops, </a></span>
                 </div>
 
                 <div class="entry-social">
                     <span class="mail"><a
-                        href="mailto:?subject=Setting up Windows Subsystem for Linux (WSL) with Vagrant&amp;body=Viens découvrir un article à propos de [Setting up Windows Subsystem for Linux (WSL) with Vagrant] sur le site de Ian Panganiban. https://www.lkpanganiban.com/setting-up-windows-subsystem-for-linux-wsl-with-vagrant.html"
+                        href="mailto:?subject=A thing called MLOps&amp;body=Viens découvrir un article à propos de [A thing called MLOps] sur le site de Ian Panganiban. https://www.lkpanganiban.com/a-thing-called-mlops.html"
                         title="Share by Email" target="_blank"><img
                         src="https://www.lkpanganiban.com/theme/images/icons/mail-s.png"></a></span>
 
                         <a target="_blank" title="Linkedin"
-                        href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.lkpanganiban.com/setting-up-windows-subsystem-for-linux-wsl-with-vagrant.html&title=Setting up Windows Subsystem for Linux (WSL) with Vagrant"
+                        href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.lkpanganiban.com/a-thing-called-mlops.html&title=A thing called MLOps"
                         rel="nofollow"
                         onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img
                              src="https://www.lkpanganiban.com/theme/images/icons/linkedin-s.png"></a>
@@ -131,7 +115,7 @@ export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/e/Development"</code></p>
                     <span class="twitter"><a target="_blank" rel="nofollow"
                                              onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"
                                              title="Twitter"
-                                             href="https://twitter.com/share?url=https://www.lkpanganiban.com/setting-up-windows-subsystem-for-linux-wsl-with-vagrant.html&text=Setting up Windows Subsystem for Linux (WSL) with Vagrant&via="><img
+                                             href="https://twitter.com/share?url=https://www.lkpanganiban.com/a-thing-called-mlops.html&text=A thing called MLOps&via="><img
                             src="https://www.lkpanganiban.com/theme/images/icons/twitter-s.png"></a></span>
 
 
