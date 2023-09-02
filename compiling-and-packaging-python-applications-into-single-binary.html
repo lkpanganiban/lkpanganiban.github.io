@@ -98,14 +98,14 @@
 </li>
 <li>
 <p>Run the following command to build the package</p>
-<div class="highlight"><pre><span></span><code><span class="nv">time</span><span class="w"> </span><span class="nv">env</span><span class="o">/</span><span class="nv">bin</span><span class="o">/</span><span class="nv">python</span><span class="w"> </span><span class="o">-</span><span class="nv">m</span><span class="w"> </span><span class="nv">nuitka</span><span class="w"> </span>\
-<span class="w">        </span><span class="o">--</span><span class="nv">onefile</span><span class="w"> </span>\
-<span class="w">        </span><span class="o">--</span><span class="k">include</span><span class="o">-</span><span class="nv">data</span><span class="o">-</span><span class="nv">files</span><span class="o">=</span><span class="nv">data_dir</span><span class="o">/</span><span class="nv">ml_model</span>.<span class="nv">txt</span><span class="o">=</span><span class="nv">data_dir</span><span class="o">/</span><span class="w"> </span>\
-<span class="w">        </span><span class="o">--</span><span class="k">include</span><span class="o">-</span><span class="nv">data</span><span class="o">-</span><span class="nv">files</span><span class="o">=</span><span class="nv">data_dir</span><span class="o">/</span><span class="nv">sample_license</span><span class="o">=</span><span class="nv">data_dir</span><span class="o">/</span><span class="w"> </span>\
-<span class="w">        </span><span class="o">--</span><span class="k">include</span><span class="o">-</span><span class="nv">module</span><span class="o">=</span><span class="nv">sqlalchemy</span>.<span class="nv">sql</span>.<span class="nv">default_comparator</span><span class="w"> </span>\<span class="w"> </span>
-<span class="w">        </span><span class="o">--</span><span class="k">include</span><span class="o">-</span><span class="nv">module</span><span class="o">=</span><span class="nv">sqlalchemy</span>.<span class="nv">dialects</span><span class="w"> </span>\<span class="w"> </span>
-<span class="w">        </span><span class="o">--</span><span class="nv">linux</span><span class="o">-</span><span class="nv">onefile</span><span class="o">-</span><span class="nv">icon</span><span class="o">=</span><span class="nv">data_dir</span><span class="o">/</span><span class="nv">python3</span>.<span class="nv">xpm</span><span class="w"> </span>\
-<span class="w">        </span><span class="nv">sample_binary</span>.<span class="nv">py</span><span class="w"> </span>#<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">entrypoint</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">have</span><span class="w"> </span><span class="nv">created</span><span class="w"> </span><span class="nv">earlier</span>
+<div class="highlight"><pre><span></span><code>time env/bin/python -m nuitka \
+        --onefile \
+        --include-data-files=data_dir/ml_model.txt=data_dir/ \
+        --include-data-files=data_dir/sample_license=data_dir/ \
+        --include-module=sqlalchemy.sql.default_comparator \ 
+        --include-module=sqlalchemy.dialects \ 
+        --linux-onefile-icon=data_dir/python3.xpm \
+        sample_binary.py # the entrypoint you have created earlier
 </code></pre></div>
 
 </li>
