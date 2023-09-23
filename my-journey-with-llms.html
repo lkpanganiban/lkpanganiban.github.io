@@ -93,16 +93,16 @@
 <p>When I first encountered Codeium, I am ∏ooking for an alternative to <a href="https://github.com/features/copilot">Github Copilot</a> this is due to the barrier of entry of Copilot. In the Philippines, $10/month or $100/year or roughly (5-6K Php) is already a substantial investment for a developer who is starting out. Hence, I have decided to look for alternatives that provides a "free-tier". LLMs in programming help you to think about the problem or task more as against to writing the syntax. As they say even if it doesn't do the 100% but it created 50% or even 70% of the task then it is already an improvement.</p>
 <h1>The Setup and Features</h1>
 <p>Codeium has a an extension to VSCode where it provides a panel and inline functions. Some of these functions are the following:</p>
-<div class="highlight"><pre><span></span><code>- Code Completion
-- Test Generation
-- Code Explanation
-- Refactoring
-</code></pre></div>
-
+<ul>
+<li>Code Completion</li>
+<li>Test Generation</li>
+<li>Code Explanation</li>
+<li>Refactoring</li>
+</ul>
 <p>Codeium also provides a chat panel, where you can use it like ChatGPT where you can ask some questions regarding the code especially in the debugging process.</p>
 <p align="center">
-    <img src="20230923/image-chatpanel-1.png" alt="codeium-chat-panel-1">
-    <img src="20230923/image-chatpanel-2.png" alt="codeium-chat-panel-2">
+    <img src="https://www.lkpanganiban.com/20230923/image-chatpanel-1.png" alt="codeium-chat-panel-1">
+    <img src="https://www.lkpanganiban.com/20230923/image-chatpanel-2.png" alt="codeium-chat-panel-2">
 </p>
 
 <p>As you can see in the screenshot above, Codeium presents a variety of boilerplates for different languages like Python, Go and Typescript. It also allows you to implement debugging instead of going to Stack Overflow.</p>
@@ -110,15 +110,15 @@
 <p>I find it very useful in its ability to generate parsing scripts (RegEx, JSON, and data manipulation), creating templates and boilerplates (folder structures and bootstrapping applications), framework introductions (I started learning ReactJS only using 1 tutorial and Codeium).</p>
 <h2>Boilerplates</h2>
 <p align="center">
-    <img src="20230923/image-chatpanel-boilerplates-1.png" alt="codeium-chat-panel-boilerplate" width="50%">
-    <img src="20230923/image-boilerplate-result-1.png" alt="boilerplate-result">
+    <img src="https://www.lkpanganiban.com/20230923/image-chatpanel-boilerplates-1.png" alt="codeium-chat-panel-boilerplate" width="50%">
+    <img src="https://www.lkpanganiban.com/20230923/image-boilerplate-result-1.png" alt="boilerplate-result">
 </p>
 
 <p>As a start of my experiment, I have created a boilerplate for ReactJS. What I usually do, is prompt it to create a Python script that generates a folder and file structure (left). The generated script will generate the following folder and file structure (right). <em>Note: The recommended approach when generating a ReactJS application is to use a framework like NextJS</em></p>
 <p>Boilerplates don't only stop at file or folder generation, the typical scripts of parsing values can also be created like parsing strings using regex. We can see an example below, the solution provided by Codeium(top) as against to the "actual" solution (bottom).</p>
 <p align="center">
-    <img src="20230923/image-boilerplate-result-2.png" alt="boilerplate-result-2" width="45%">
-    <img src="20230923/image-boilerplate-result-3.png" alt="boilerplate-result-3" width="45%">
+    <img src="https://www.lkpanganiban.com/20230923/image-boilerplate-result-2.png" alt="boilerplate-result-2" width="45%">
+    <img src="https://www.lkpanganiban.com/20230923/image-boilerplate-result-3.png" alt="boilerplate-result-3" width="45%">
 </p>
 
 <p>In a pure compute perspective, <code>re.split</code> is more expensive vs <code>re.search</code> this is due to <code>re.search</code> stops the searching once it finds the occurence. Do note though, this will depend on the use case of the application and where it will be used. That is why, as software engineer, when using these tools, you need to feed the "Coding Assistants" the context for it to properly suggest the best solution.</p>
@@ -127,33 +127,33 @@
 <p>Debugging is a common occurrence is software development. Codeium like any other coding assistants help you in debugging code like explaining the stacktrace or errors from console.</p>
 <p>Similar to boilerplates, code suggestions and completions is also part of Codeium, where it helps in saving time typing a lot of boilerplate code especially when you are working with frameworks where there is a specific way of coding e.g. REST Endpoints or model declaration. Based on my experience, depending on the maturity of the library or framework this can be a hit or miss since it may hallucinate due to its assumptions of the best practices.</p>
 <p align="center">
-    <img src="20230923/image-code-suggestions.png" alt="code-suggestions">
+    <img src="https://www.lkpanganiban.com/20230923/image-code-suggestions.png" alt="code-suggestions">
 </p>
 
 <p><em>You will see which frameworks or libraries break the "recommended" way of doing things.</em></p>
 <p>Testing is another activity in the life of a software developer. Creating unit tests is a chore since it involves a lot of boilerplate especially in the class and function calls of an API or library. I typically use Codeium as a way to generate these boilerplate test structures and I modify on the logic or the actual test scenario that I want to do.</p>
 <p align="center">
-    <img src="20230923/image-code-test-1.png" alt="code-test">
+    <img src="https://www.lkpanganiban.com/20230923/image-code-test-1.png" alt="code-test">
 </p>
 
 <h2>Other Stuff - Refactoring, Code Explanation, and Documentation</h2>
 <p>Refactoring is essential when you need to implement re-writes either to make it efficient or maintainable.</p>
 <p align="center">
-    <img src="20230923/image-code-refactor.png" alt="code-refactor">
+    <img src="https://www.lkpanganiban.com/20230923/image-code-refactor.png" alt="code-refactor">
 </p>
 
 <p><em>When doing refactors, you must ensure that the proposed code does not change the context or the main functionality itself. That is why before refactoring, you must establish your tests.</em></p>
 <p>When going through codebases whether trying to understand a library or plowing through legacy ones, you need to understand the logic or the function. You'll be lucky if the codebase has comments or documentation. This is where the explain functionality is very useful. It provides a general idea of the highlighted code.</p>
 <p align="center">
-    <img src="20230923/image-code-explain-1.png" alt="code-explain-1">
-    <img src="20230923/image-code-explain-2.png" alt="code-explain-2" width="55%">
+    <img src="https://www.lkpanganiban.com/20230923/image-code-explain-1.png" alt="code-explain-1">
+    <img src="https://www.lkpanganiban.com/20230923/image-code-explain-2.png" alt="code-explain-2" width="55%">
 </p>
 
 <p><em>Your mileage will vary depending on the quality of the code.</em></p>
 <p>As part of being a software engineer is doing documentation. Documentation is one of the most nuanced part of being a developer besides meetings. Codeium provides a way to create docstrings to functions and classes.</p>
 <p align="center">
-    <img src="20230923/image-doc-strings-1.png" alt="code-docstrings-1">
-    <img src="20230923/image-doc-strings-2.png" alt="code-docstrings-2">
+    <img src="https://www.lkpanganiban.com/20230923/image-doc-strings-1.png" alt="code-docstrings-1">
+    <img src="https://www.lkpanganiban.com/20230923/image-doc-strings-2.png" alt="code-docstrings-2">
 </p>
 
 <h1>Takeaways</h1>
