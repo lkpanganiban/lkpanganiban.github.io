@@ -106,36 +106,29 @@
 <li>Summarization and Response: The returned results will be passed to the LLM and execute summarization task and thus generate the final output.</li>
 </ol>
 <h1>The Setup</h1>
-<ol>
-<li>
-<p>Hardware: <em>What I want to achieve in this experiment is to run the process without very expensive components like GPUs.</em></p>
-</li>
-<li>
-<p>CPU: Ryzen 4500u</p>
-</li>
+<h2>Hardware</h2>
+<p><em>What I want to achieve in this experiment is to run the process without very expensive components like GPUs.</em></p>
+<ul>
+<li>CPU: Ryzen 4500u</li>
 <li>RAM: 16GB</li>
 <li>GPU: Integrated GPU (6 graphics cores)</li>
 <li>Operating: Ubuntu 22.04 running in WSL</li>
-<li>
-<p>Swap: 0</p>
-</li>
-<li>
-<p>Models and Data: <em>The models came from huggingface.co.</em></p>
-</li>
-<li>
-<p>Large Language Model: llama-2-7b-chat.Q4_0.gguf</p>
-</li>
+<li>Swap: 0</li>
+</ul>
+<h2>Models and Data:</h2>
+<p><em>The models came from huggingface.co.</em></p>
+<ul>
+<li>Large Language Model: llama-2-7b-chat.Q4_0.gguf</li>
 <li>Embedding Model: sentence-transformers/all-mpnet-base-v2</li>
-<li>
-<p>Data: QGIS 3.22 User Manual (1393 pages with files size of 50.9mb)</p>
-</li>
-<li>
-<p>Libraries: <em>You may need to extra setup to configure LlamaCPP properly for your own hardware.</em></p>
-</li>
+<li>Data: QGIS 3.22 User Manual (1393 pages with files size of 50.9mb)</li>
+</ul>
+<h2>Libraries:</h2>
+<p><em>You may need to extra setup to configure LlamaCPP properly for your own hardware.</em></p>
+<ul>
 <li>Langchain</li>
 <li>LlamaCPP</li>
 <li>Llama Index</li>
-</ol>
+</ul>
 <h1>The Experiment</h1>
 <p>I have created a notebook to go through the actual code <a href="https://github.com/lkpanganiban/llama-index-experiment">here.</a> In this post, I will just go through my observations of the processing flow.</p>
 <ol>
@@ -159,12 +152,15 @@
 </p>
 </li>
 <li>
-<p>The generate results have some errors and redundant steps. In this scenario, you may need to explore the following areas:</p>
+<p>The generate results have some errors and redundant steps.</p>
 </li>
+</ol>
+<h2>Experiment Notes</h2>
+<ul>
 <li>Returned results from the Vector DB (what are the paragraphs or sentences - do they make sense?)</li>
 <li>Prompt setup to implement summarization (from the returned results, what is the prompt used?)</li>
 <li>Model itself (since we are using a quantized model which uses int4 there maybe a loss of precision which affected the generated results. There is also how the model was trained where it will affect the quality of the results.)</li>
-</ol>
+</ul>
 <h1>Next Steps</h1>
 <ol>
 <li>Try out other models more specialized to my use case which is more of an instruction type instead of chat.</li>
