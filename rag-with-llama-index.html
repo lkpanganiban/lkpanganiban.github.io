@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" itemscope itemtype="http://schema.org/Person">
+<head>
+            <meta charset="utf-8">
+        <!-- Site Meta Data -->
+        <title>RAG with Llama Index</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Ian Panganiban">
+
+        <link rel="shortcut icon" href="https://www.lkpanganiban.com/theme/images/icons/favicon.png">
+
+        <!-- schema.org -->
+        <meta itemprop="name" content="lkpanganiban.com">
+        <meta itemprop="image" content="">
+        <meta itemprop="description" content="">
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <!-- Style Meta Data -->
+        <link rel="stylesheet" href="https://www.lkpanganiban.com/theme/css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="https://www.lkpanganiban.com/theme/css/pygments.css" type="text/css"/>
+
+        <!-- Feed Meta Data -->
+
+        <!-- Twitter Feed -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:image" content="">
+
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:url" content="https://www.lkpanganiban.com/rag-with-llama-index.html">
+    <meta name="twitter:title" content="lkpanganiban.com ~ RAG with Llama Index">
+    <meta name="twitter:description" content="Over an afternoon&#39;s hacking, I&#39;ve managed to setup a Large Language Model that implements a Retrieval Augmented Generation or RAG architecture locally. This enables LLMs to work on your own and up-to-date data without the need of retraining. In this post, I will be going through my initial implementation of …">
+
+    <!-- Facebook Meta Data -->
+    <meta property="og:title" content="lkpanganiban.com ~ RAG with Llama Index"/>
+    <meta property="og:description" content="Over an afternoon&#39;s hacking, I&#39;ve managed to setup a Large Language Model that implements a Retrieval Augmented Generation or RAG architecture locally. This enables LLMs to work on your own and up-to-date data without the need of retraining. In this post, I will be going through my initial implementation of …"/>
+    <meta property="og:image" content=""/>
+</head>
+
+<body>
+<!-- Sidebar -->
+<aside>
+    <center><a href="https://www.lkpanganiban.com"><img id="avatar" src="https://www.lkpanganiban.com/images/ian.jpg"></a></center>
+    <h1>lkpanganiban.com</h1>
+        <p>Geo Programmer | ian.panganiban@outlook.ph</p>
+    <br>
+
+
+    <nav class="nav">
+        <ul class="list-bare">
+
+
+                <li><a class="nav__link" href="https://www.lkpanganiban.com/pages/profile.html">Profile</a></li>
+                <li><a class="nav__link" href="https://www.lkpanganiban.com/pages/projects.html">Projects</a></li>
+
+        </ul>
+    </nav>
+
+    <p class="social">
+                <a href="https://www.linkedin.com/in/ian-panganiban/" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/linkedin.png"></a>
+                <a href="https://github.com/lkpanganiban" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/github.png"></a>
+                <a href="https://twitter.com/lkpanganiban" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/twitter.png"></a>
+    </p>
+
+        <h2>Categories</h2>
+        <ul class="navbar">
+                <li class="active"><a
+                        href="https://www.lkpanganiban.com/category/blog.html">blog</a></li>
+                <li><a
+                        href="https://www.lkpanganiban.com/category/guides.html">guides</a></li>
+        </ul>
+
+
+</aside>
+
+<!-- Content -->
+<article>
+    <section id="content">
+        <article>
+            <h2 class="post_title post_detail"><a href="https://www.lkpanganiban.com/rag-with-llama-index.html" rel="bookmark"
+                                                  title="Permalink to RAG with Llama Index">RAG with Llama Index</a></h2>
+            <div class="entry-content blog-post">
+                <p>Over an afternoon's hacking, I've managed to setup a Large Language Model that implements a Retrieval Augmented Generation or RAG architecture locally. This enables LLMs to work on your own and up-to-date data without the need of retraining. In this post, I will be going through my initial implementation of the retrieval augmented generation or RAG systems.</p>
+<p>Over an afternoon's hacking, I've managed to setup a Large Language Model that implements a Retrieval Augmented Generation or RAG architecture locally. This enables LLMs to work on your own and up-to-date data without the need of retraining. In this post, I will be going through my initial implementation of the retrieval augmented generation or RAG systems.</p>
+<h1>Objective</h1>
+<p>The objective of this exercise is to setup and run a RAG implementation using LLMs with generally available hardware locally (no dedicated GPUs and no cloud!). <em>I want to remove the barrier of expensive hardware and giving cloud providers more money and my information.</em></p>
+<h1>What is RAG?</h1>
+<p>Retrieval Augmented Generation or RAG for short allows the LLM to work with new data without the need of retraining. RAG has the following components:</p>
+<ul>
+<li>Vector Database (Elasticsearch, Pinecone, PostgreSQL Vector Plugin)</li>
+<li>Embedding Model (maybe different from the actual LLM)</li>
+<li>Large Language Model</li>
+</ul>
+<h2>General Flow</h2>
+<p align="center">
+    <img src="https://www.lkpanganiban.com/20230926/rag_diagram.png" alt="rag-diagram">
+</p>
+
+<ol>
+<li>Data Ingestion: Using an embedding model, the data will be ingested (texts in this case) into this database by converting them into vectors. As an example, the following sentece "A TIFF file is a raster format." will be converted into <code>[0.211, 0.113, 0.44112, -0.1294]</code> vector and this vector will be stored into the vector database.</li>
+<li>Search and Retrieval: When a question comes in "Are TIFF files raster data?" the question will also be converted into a vector and the vector database will implement a clustering algorithm like approximate nearest neighbor, K-nearest neighbor, inverted index, etc.</li>
+<li>Summarization and Response: The returned results will be passed to the LLM and execute summarization task and thus generate the final output.</li>
+</ol>
+<h1>The Setup</h1>
+<ol>
+<li>
+<p>Hardware: <em>What I want to achieve in this experiment is to run the process without very expensive components like GPUs.</em></p>
+</li>
+<li>
+<p>CPU: Ryzen 4500u</p>
+</li>
+<li>RAM: 16GB</li>
+<li>GPU: Integrated GPU (6 graphics cores)</li>
+<li>Operating: Ubuntu 22.04 running in WSL</li>
+<li>
+<p>Swap: 0</p>
+</li>
+<li>
+<p>Models and Data: <em>The models came from huggingface.co.</em></p>
+</li>
+<li>
+<p>Large Language Model: llama-2-7b-chat.Q4_0.gguf</p>
+</li>
+<li>Embedding Model: sentence-transformers/all-mpnet-base-v2</li>
+<li>
+<p>Data: QGIS 3.22 User Manual (1393 pages with files size of 50.9mb)</p>
+</li>
+<li>
+<p>Libraries: <em>You may need to extra setup to configure LlamaCPP properly for your own hardware.</em></p>
+</li>
+<li>
+<p>Langchain</p>
+</li>
+<li>LlamaCPP</li>
+<li>Llama Index</li>
+</ol>
+<h1>The Experiment</h1>
+<p>I have created a notebook to go through the actual code <a href="https://github.com/lkpanganiban/llama-index-experiment">here.</a> In this post, I will just go through my observations of the processing flow.</p>
+<ol>
+<li>
+<p>Data ingestion will take the longest part of the entire process and maybe resource intensive depending on the volume in terms of pages and files. This step will do the extraction from the source file, conversion of text into vector data, and store into the vector DB. In this exercise, it took about <code>12-15 mins</code> to ingest a 1,393 page document and consumes about 6 GB of RAM for a 6 core machine. <em>If your machine has more CPU cores or if the system has GPU this will be faster to run.</em>
+ <br>
+<p align="center">
+      <img src="https://www.lkpanganiban.com/20230926/ingestion-usage.png" alt="ingestion-usage">
+   </p>
+</p>
+</li>
+<li>
+<p>Depending on the model parameters like chunk_overlap, temperature, context_window, etc., the results may vary. There is a need to explore the sensitivity of each parameter in terms of generation performance.</p>
+</li>
+<li>
+<p>The inferencing section, executed about <code>2-3 mins</code>.
+ <br>
+<p align="center">
+      <img src="https://www.lkpanganiban.com/20230926/llama-result.png" alt="llama-result">
+   </p>
+</p>
+</li>
+<li>
+<p>The generate results have some errors and redundant steps. In this scenario, you may need to explore the following areas:</p>
+</li>
+<li>Returned results from the Vector DB (what are the paragraphs or sentences - do they make sense?)</li>
+<li>Prompt setup to implement summarization (from the returned results, what is the prompt used?)</li>
+<li>Model itself (since we are using a quantized model which uses int4 there maybe a loss of precision which affected the generated results. There is also how the model was trained where it will affect the quality of the results.)</li>
+</ol>
+<h1>Next Steps</h1>
+<ol>
+<li>Try out other models more specialized to my use case which is more of an instruction type instead of chat.</li>
+<li>Play around the with parameters like chunk_overlap, temperature, context_window, etc.</li>
+<li>Extend the RAG system to not only focus in a vector setup but also with a mixture of text data (Bag of Words).</li>
+<li>Incorporate evaluation, where given multiple models, it will evaluate which output will be used as the main result or mix the outputs of these models. <em>This is like ensemble learning where you a mixed of experts/models to generate a result.</em></li>
+<li>Create agents on-top of RAGs, where it will control a software using the outputs of the model. <em>Given the outputs above, control QGIS to do the steps stated by LLM.</em> I see the use case of e.g. I want to generate a flood model using the data in folder A where the model will follow papers X, Y, Z.</li>
+</ol>
+<h1>Notes, Takeaways, Opinions</h1>
+<ul>
+<li>The outputs generated by the LLM may not be 100% accurate but for me this is enough to get me started or point me to the right direction. <em>You will still need to evaluate the outputs if it makes sense.</em></li>
+<li>The barrier of going into the LLM space is still there but it is going down exponentially with better architecture, tooling, and ecosystem.</li>
+<li>For me, the better use for LLMs will be in the RAG type applications where every individual, company, or organization have their "secret" sauce. Hence, running it locally is of great value instead of offloading the system to an external provider.</li>
+</ul>
+            </div>
+            <div class="post_list">
+                <span>By </span>
+                <a href="https://www.lkpanganiban.com/author/ian-panganiban.html">@Ian Panganiban</a>
+                <span> in </span>
+                <span class="post_category"><a href="https://www.lkpanganiban.com/category/blog.html" rel="bookmark"
+                                               title="Permalink to blog">[ blog ]</a></span>
+                <span class="post_date">Sat 16 September 2023</span>
+                <div><span>Tags : </span>
+                            <span><a href="https://www.lkpanganiban.com/tag/llms.html">#llms, </a></span>
+                            <span><a href="https://www.lkpanganiban.com/tag/experiments.html">#experiments, </a></span>
+                </div>
+
+                <div class="entry-social">
+                    <span class="mail"><a
+                        href="mailto:?subject=RAG with Llama Index&amp;body=Viens découvrir un article à propos de [RAG with Llama Index] sur le site de Ian Panganiban. https://www.lkpanganiban.com/rag-with-llama-index.html"
+                        title="Share by Email" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/mail-s.png"></a></span>
+
+                        <a target="_blank" title="Linkedin"
+                        href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.lkpanganiban.com/rag-with-llama-index.html&title=RAG with Llama Index"
+                        rel="nofollow"
+                        onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img
+                             src="https://www.lkpanganiban.com/theme/images/icons/linkedin-s.png"></a>
+ 
+                    <span class="twitter"><a target="_blank" rel="nofollow"
+                                             onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"
+                                             title="Twitter"
+                                             href="https://twitter.com/share?url=https://www.lkpanganiban.com/rag-with-llama-index.html&text=RAG with Llama Index&via="><img
+                            src="https://www.lkpanganiban.com/theme/images/icons/twitter-s.png"></a></span>
+
+
+                </div>
+            </div>
+        </article>
+    </section>
+</article>
+
+<!-- Footer -->
+    <footer>
+        <p>
+            Blog powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>.
+            Theme <a href="https://github.com/parbhat/pelican-blue">Pelican-Blue</a> by <a
+                href="https://parbhatpuri.com/">@parbhat</a>.
+        </p>
+    </footer>
+
+
+</body>
+</html>
