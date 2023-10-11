@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" itemscope itemtype="http://schema.org/Person">
+<head>
+            <meta charset="utf-8">
+        <!-- Site Meta Data -->
+        <title>Chains with LLMs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Ian Panganiban">
+
+        <link rel="shortcut icon" href="https://www.lkpanganiban.com/theme/images/icons/favicon.png">
+
+        <!-- schema.org -->
+        <meta itemprop="name" content="lkpanganiban.com">
+        <meta itemprop="image" content="">
+        <meta itemprop="description" content="">
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <!-- Style Meta Data -->
+        <link rel="stylesheet" href="https://www.lkpanganiban.com/theme/css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="https://www.lkpanganiban.com/theme/css/pygments.css" type="text/css"/>
+
+        <!-- Feed Meta Data -->
+
+        <!-- Twitter Feed -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:image" content="">
+
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:url" content="https://www.lkpanganiban.com/chains-with-llms.html">
+    <meta name="twitter:title" content="lkpanganiban.com ~ Chains with LLMs">
+    <meta name="twitter:description" content="Chains are common parts of any large language model application. From summarization to comparison. This provides the extra ability of LLMs to improve its accuracy and fluency. This also allows to build agents on top, where it can connect to multiple modality (third party APIs or services). Chains are common …">
+
+    <!-- Facebook Meta Data -->
+    <meta property="og:title" content="lkpanganiban.com ~ Chains with LLMs"/>
+    <meta property="og:description" content="Chains are common parts of any large language model application. From summarization to comparison. This provides the extra ability of LLMs to improve its accuracy and fluency. This also allows to build agents on top, where it can connect to multiple modality (third party APIs or services). Chains are common …"/>
+    <meta property="og:image" content=""/>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PQC0GXQ1JC"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-PQC0GXQ1JC');
+        </script>
+</head>
+
+<body>
+<!-- Sidebar -->
+<aside>
+    <center><a href="https://www.lkpanganiban.com"><img id="avatar" src="https://www.lkpanganiban.com/images/ian.jpg"></a></center>
+    <h1>lkpanganiban.com</h1>
+        <p>Geo Programmer | ian.panganiban@outlook.ph</p>
+    <br>
+
+
+    <nav class="nav">
+        <ul class="list-bare">
+
+
+                <li><a class="nav__link" href="https://www.lkpanganiban.com/pages/profile.html">Profile</a></li>
+                <li><a class="nav__link" href="https://www.lkpanganiban.com/pages/projects.html">Projects</a></li>
+
+        </ul>
+    </nav>
+
+    <p class="social">
+                <a href="https://www.linkedin.com/in/ian-panganiban/" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/linkedin.png"></a>
+                <a href="https://github.com/lkpanganiban" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/github.png"></a>
+                <a href="https://twitter.com/lkpanganiban" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/twitter.png"></a>
+    </p>
+
+        <h2>Categories</h2>
+        <ul class="navbar">
+                <li class="active"><a
+                        href="https://www.lkpanganiban.com/category/blog.html">blog</a></li>
+                <li><a
+                        href="https://www.lkpanganiban.com/category/guides.html">guides</a></li>
+        </ul>
+
+
+</aside>
+
+<!-- Content -->
+<article>
+    <section id="content">
+        <article>
+            <h2 class="post_title post_detail"><a href="https://www.lkpanganiban.com/chains-with-llms.html" rel="bookmark"
+                                                  title="Permalink to Chains with LLMs">Chains with LLMs</a></h2>
+            <div class="entry-content blog-post">
+                <p>Chains are common parts of any large language model application. From summarization to comparison. This provides the extra ability of LLMs to improve its accuracy and fluency. This also allows to build agents on top, where it can connect to multiple modality (third party APIs or services).</p>
+<p>Chains are common parts of any large language model application. From summarization to comparison. This provides the extra ability of LLMs to improve its accuracy and fluency. This also allows to build agents on top, where it can connect to multiple modality (third party APIs or services).</p>
+<h1>Langchain Chains to Mix Models</h1>
+<p>Langchain is a very powerful tool to create chains. From simple RAG systems to full blown agents. In the following <a href="https://github.com/lkpanganiban/playthrough-llama-index-langchain/blob/main/implementations/langchain-chain/langchain_chain.ipynb">notebook</a>, I've implemented the following workflow:</p>
+<ol>
+<li>Implement a RAG system that will retrieve and summarize the answer to the prompt. I want to identify the parameter that I will use to identify the better answer. <em>I am using llama-2-7b chat as the LLM for the RAG system.</em></li>
+<li>Using the answers, these will be fed into another LLM chain that will implement the comparison. <em>I am using mistral-7b as the model that implements the comparison.</em></li>
+<li>The output of step 2 will be used as the main answer that will be presented to the user.</li>
+</ol>
+<p>The workflow above is using Langchain's SimpleChain workflow. This allows to implement sequential chains. You will also notice that the chain are both using Custom Chains. Something worth noting is that these Custom Chains contain a lot of boilerplate in terms of parameters and properties.</p>
+<h1>Takeaways</h1>
+<ul>
+<li>There is a router chain in langchain, where given a "prompt" it will decide which model will be used to answer the prompt.</li>
+<li>Mixture of Experts, I know see how mixture of experts can be done in the LLM space, where given N models with specific "identities" it can be used to improve the accuracy of the answer.</li>
+<li>Similar to mixture of experts and chains, multi-modal language models allow you to integrate to other endpoints, services, or APIs and generate agents that are fine-tuned for a specific set of tasks and thus reducing the "compute" resources needed.</li>
+</ul>
+<p>Overall, I am still exploring the router setup and expanding my research with multi-modal language models.</p>
+            </div>
+            <div class="post_list">
+                <span>By </span>
+                <a href="https://www.lkpanganiban.com/author/ian-panganiban.html">@Ian Panganiban</a>
+                <span> in </span>
+                <span class="post_category"><a href="https://www.lkpanganiban.com/category/blog.html" rel="bookmark"
+                                               title="Permalink to blog">[ blog ]</a></span>
+                <span class="post_date">Wed 11 October 2023</span>
+                <div><span>Tags : </span>
+                            <span><a href="https://www.lkpanganiban.com/tag/llms.html">#llms, </a></span>
+                            <span><a href="https://www.lkpanganiban.com/tag/experiments.html">#experiments, </a></span>
+                </div>
+
+                <div class="entry-social">
+                    <span class="mail"><a
+                        href="mailto:?subject=Chains with LLMs&amp;body=Viens découvrir un article à propos de [Chains with LLMs] sur le site de Ian Panganiban. https://www.lkpanganiban.com/chains-with-llms.html"
+                        title="Share by Email" target="_blank"><img
+                        src="https://www.lkpanganiban.com/theme/images/icons/mail-s.png"></a></span>
+
+                        <a target="_blank" title="Linkedin"
+                        href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.lkpanganiban.com/chains-with-llms.html&title=Chains with LLMs"
+                        rel="nofollow"
+                        onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img
+                             src="https://www.lkpanganiban.com/theme/images/icons/linkedin-s.png"></a>
+ 
+                    <span class="twitter"><a target="_blank" rel="nofollow"
+                                             onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"
+                                             title="Twitter"
+                                             href="https://twitter.com/share?url=https://www.lkpanganiban.com/chains-with-llms.html&text=Chains with LLMs&via="><img
+                            src="https://www.lkpanganiban.com/theme/images/icons/twitter-s.png"></a></span>
+
+
+                </div>
+            </div>
+        </article>
+    </section>
+</article>
+
+<!-- Footer -->
+    <footer>
+        <p>
+            Blog powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>.
+            Theme <a href="https://github.com/parbhat/pelican-blue">Pelican-Blue</a> by <a
+                href="https://parbhatpuri.com/">@parbhat</a>.
+        </p>
+    </footer>
+
+
+</body>
+</html>
