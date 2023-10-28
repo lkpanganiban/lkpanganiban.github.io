@@ -1,0 +1,116 @@
+{
+    "code" : 0 ,
+    "data" : [
+     
+    {
+        "title" : "Chains with LLMs - 2023-10-11",
+        "url" : "/machine-learning/2023/10/11/chains-with-LLMs.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "Mixed RAGs and Output Validation - 2023-09-30",
+        "url" : "/machine-learning/2023/09/30/mixed-RAGs.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "RAG with Llama Index - 2023-09-26",
+        "url" : "/machine-learning/2023/09/26/RAG-with-LlamaIndex.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "My Journey with LLMs - 2023-09-23",
+        "url" : "/machine-learning/2023/09/23/LLM-journey.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "Geospatial Stack - 2023-09-06",
+        "url" : "/data-science/2023/09/06/geospatial-stack.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "The Data Stack - 2023-09-02",
+        "url" : "/data-science/2023/09/02/the-data-stack.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "ML Model Telemetry - 2023-03-11",
+        "url" : "/machine-learning/2023/03/11/ML-Model-Telemetry.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "A thing called MLOps - 2023-02-25",
+        "url" : "/machine-learning/2023/02/25/a-thing-called-MLOps.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "Using Pyarmor to Obfuscate your Python Application - 2023-01-15",
+        "url" : "/python/2023/01/15/working-with-pyarmor-to-obfuscate.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "Compiling and Packaging Python Applications into Single Binary - 2023-01-14",
+        "url" : "/python/2023/01/14/creating-a-python-binary.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "Setting up Windows Subsystem for Linux (WSL) with Vagrant - 2018-10-23",
+        "url" : "/devops/2018/10/23/setting-up-wsl-with-vagrant.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "Backing up and Restoring Mongo DB - 2018-09-22",
+        "url" : "/database/2018/09/22/backing-up-restore-mongodb.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "Backup and Restore with PostgreSQL - 2018-09-21",
+        "url" : "/database/2018/09/21/backing-up-postgresql.html"
+    }
+    
+    ,
+    
+    
+    {
+        "title" : "Backing up and restoring Elasticsearch data with Elasticdump - 2018-09-21",
+        "url" : "/database/2018/09/21/backing-up-elasticsearch-with-elasticdump.html"
+    }
+    
+    
+    ]
+}

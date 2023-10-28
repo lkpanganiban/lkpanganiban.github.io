@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>lkpanganiban</title>
+    <description>Ian&apos;s blog,use Jekyll and github pages.</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 29 Oct 2023 06:38:47 +0800</pubDate>
+    <lastBuildDate>Sun, 29 Oct 2023 06:38:47 +0800</lastBuildDate>
+    <generator>Jekyll v3.9.3</generator>
+    
+      <item>
+        <title>Chains with LLMs</title>
+        <description>&lt;p&gt;Chains are common parts of any large language model application. From summarization to comparison. This provides the extra ability of LLMs to improve its accuracy and fluency. This also allows to build agents on top, where it can connect to multiple modality (third party APIs or services).&lt;/p&gt;
+
+&lt;h1 id=&quot;langchain-chains-to-mix-models&quot;&gt;Langchain Chains to Mix Models&lt;/h1&gt;
+
+&lt;p&gt;Langchain is a very powerful tool to create chains. From simple RAG systems to full blown agents. In the following &lt;a href=&quot;https://github.com/lkpanganiban/playthrough-llama-index-langchain/blob/main/implementations/langchain-chain/langchain_chain.ipynb&quot;&gt;notebook&lt;/a&gt;, I’ve implemented the following workflow:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Implement a RAG system that will retrieve and summarize the answer to the prompt. I want to identify the parameter that I will use to identify the better answer. &lt;em&gt;I am using llama-2-7b chat as the LLM for the RAG system.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Using the answers, these will be fed into another LLM chain that will implement the comparison. &lt;em&gt;I am using mistral-7b as the model that implements the comparison.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;The output of step 2 will be used as the main answer that will be presented to the user.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The workflow above is using Langchain’s SimpleChain workflow. This allows to implement sequential chains. You will also notice that the chain are both using Custom Chains. Something worth noting is that these Custom Chains contain a lot of boilerplate in terms of parameters and properties.&lt;/p&gt;
+
+&lt;h1 id=&quot;takeaways&quot;&gt;Takeaways&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;There is a router chain in langchain, where given a “prompt” it will decide which model will be used to answer the prompt.&lt;/li&gt;
+  &lt;li&gt;Mixture of Experts, I know see how mixture of experts can be done in the LLM space, where given N models with specific “identities” it can be used to improve the accuracy of the answer.&lt;/li&gt;
+  &lt;li&gt;Similar to mixture of experts and chains, multi-modal language models allow you to integrate to other endpoints, services, or APIs and generate agents that are fine-tuned for a specific set of tasks and thus reducing the “compute” resources needed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Overall, I am still exploring the router setup and expanding my research with multi-modal language models.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 11 Oct 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/machine-learning/2023/10/11/chains-with-LLMs.html</link>
+        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/10/11/chains-with-LLMs.html</guid>
+        
+        <category>machine-learning</category>
+        
+        
+        <category>Machine-learning</category>
+        
+      </item>
+    
+      <item>
+        <title>Mixed RAGs and Output Validation</title>
+        <description>&lt;p&gt;From the previous blogpost about RAG with Llama Index, I’ve gone through how about developing RAGs with Llama Index, a library to create LLM applications. For this post, I have extended my experiment to mix vector and text based algorithms of vectors and bag of words.&lt;/p&gt;
+
+&lt;h1 id=&quot;bag-of-words-and-retrievals&quot;&gt;Bag of Words and Retrievals&lt;/h1&gt;
+
+&lt;p&gt;In most search or indexing databases like Elasticsearch, Opensearch, and Solr, the general algorithms being used are &lt;a href=&quot;https://en.wikipedia.org/wiki/Okapi_BM25&quot;&gt;Best Matching (BM25)&lt;/a&gt; and the &lt;a href=&quot;https://en.wikipedia.org/wiki/Tf%E2%80%93idf&quot;&gt;term-frequency/inverse-document-frequency (TF/IDF)&lt;/a&gt;. It basically generates a relevance score that will be used to rank the entries in the database. Both of these fall under the bag of words type of algorithms where the existence and occurence of a word drive the relevance. The simplified steps on how bag of words pipeline are the following:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Read and parse the data source.&lt;/li&gt;
+  &lt;li&gt;Identify the unique words in the data entry, stem words, and remove stop words. &lt;em&gt;Depends on the word dictionary that you will use. Some stop are the following: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;and, are, that, then, there, such&lt;/code&gt;.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Store the unique words with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt; of the data/document entry in an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index&lt;/code&gt;. E.g. Hello -&amp;gt; [Doc1, Doc2] and World -&amp;gt; [Doc2]&lt;/li&gt;
+  &lt;li&gt;A prompt will be fed and parsed. &lt;em&gt;Removes the stopwords, tokenization, and/or implement stemming.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Using the output of 4, return the entries that have a hit.&lt;/li&gt;
+  &lt;li&gt;Implement scoring using the term counts, total unique words, total words in the corpus, etc.&lt;/li&gt;
+  &lt;li&gt;Return the top &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;N&lt;/code&gt; results and present the results to user.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The general issue that comes up with these types of algorithms is that it does not take into account synonymous words or even the position of the term. As an example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;with resource&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;without resource&lt;/code&gt; may have the same relevance score if the user is looking for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resource&lt;/code&gt;; this is due the algorithm only uses the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;resource&lt;/code&gt; term as the input to generate the relevance. There are ways to consider this use case by setting up keywords or even modifying the score by detecting the words that will provide more context; the issue though is that you will need to hard-coding all of the use cases. That is why a lot of AI or ML workflows are using more on the vector retrieval as against to bag of words.&lt;/p&gt;
+
+&lt;p&gt;The good thing about these types of algorithms though is that they are less complex by term counts meaning it is less complex and more explainable to the user. ML or embedding based retrievals introduce additional complexity by adding chunking, overlaps, data where the model was trained on, conversion to vector space, etc. Given these additional complexities, the embedding approach is computationally expensive.&lt;/p&gt;
+
+&lt;h1 id=&quot;vector-and-embedding-based-retrievals&quot;&gt;Vector and Embedding-based Retrievals&lt;/h1&gt;
+
+&lt;p&gt;Due to the expansion of the new thing which is ML or AI in general, the proliferation of vector stores available either proprietary or open source are on the rise and traditional database technologies are creating use cases or adding support to execute vector retrievals.&lt;/p&gt;
+
+&lt;p&gt;In the my previous blogpost, to implement a sample RAG using Llama Index, it needs to convert the entries from the data source into a vector and stores it into a vector store by using embedding models. When storing these vectors the associated metadata can either be the ID or even the actual text is also stored in the vector store. The simplified steps on how to implement this pipeline are the following:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Read and parse the data source.&lt;/li&gt;
+  &lt;li&gt;Pass the data source into the embedding model and thus generating a vector - we can call this as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Data Vector&lt;/code&gt; E.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hello World&lt;/code&gt; =&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[0.1021, 0.3341]&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Store the output into a vector store.&lt;/li&gt;
+  &lt;li&gt;A prompt or question will be fed into the vector store. This will repeat step 2. We can call this as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Prompt Vector&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Implement a search by comparing (clustering - e.g. KNN, cosine similarity) the distance of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Prompt Vector&lt;/code&gt; with the various &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Data Vectors&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Sort the distances.&lt;/li&gt;
+  &lt;li&gt;Return the top &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;N&lt;/code&gt; Data Vectors together with the metadata. Present the results.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Based on the steps, the search and retrieval is dependent on the vector computation and distances instead of term occurence. As mentioned in the bag of words section, even though this will solve the hardcoding and positional issues the vector is dependent on the data the embedded model is trained on.&lt;/p&gt;
+
+&lt;h1 id=&quot;vector--bag-of-words&quot;&gt;Vector + Bag of Words&lt;/h1&gt;
+
+&lt;p&gt;I am quite curious how the mixing of BM25 and vector retrieval algorithms will affect in the output result of the LLM. For this, I have implemented a &lt;a href=&quot;https://github.com/lkpanganiban/llama-index-experiment/blob/main/implementations/llama_mix_rags_weaviate.ipynb&quot;&gt;notebook&lt;/a&gt; showing the difference between the two algorithms. I will be using &lt;a href=&quot;https://www.llamaindex.ai/&quot;&gt;Llama Index&lt;/a&gt; and &lt;a href=&quot;https://weaviate.io/&quot;&gt;Weaviate&lt;/a&gt; for this experiement. &lt;em&gt;Weaviate can be installed using a &lt;a href=&quot;https://weaviate.io/developers/weaviate/installation/docker-compose&quot;&gt;docker-compose.yml&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;experiment-notes&quot;&gt;Experiment Notes&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The consideration using Weaviate due to its out of the box support to BM25 and vector retrieval is good for maintainability point of view. You don’t want to have different databases for Vector and Textual searches. &lt;em&gt;You can use other combination of databases as you like for this like Elasticsearch, Pinecone, and PostgreSQL + PGVector.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;To evaluate the results, feeding the generated response to another LLM to make the decision which one to use is good for an automation point of view. If you can fine-tune the evaluator model based on the target audience will be very handy since it can help in re-wording some of the terms to the target audience e.g Non-domain audience.&lt;/li&gt;
+  &lt;li&gt;The results of the vector retrieval did not change a lot. I think this is due that we are querying something specific like steps in a handbook or instructions. &lt;em&gt;Maybe if we expand to other workloads and use cases like news articles or forum posts, the outputs will differ.&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 30 Sep 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/machine-learning/2023/09/30/mixed-RAGs.html</link>
+        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/09/30/mixed-RAGs.html</guid>
+        
+        <category>machine-learning</category>
+        
+        
+        <category>Machine-learning</category>
+        
+      </item>
+    
+      <item>
+        <title>RAG with Llama Index</title>
+        <description>&lt;p&gt;Over an afternoon’s hacking, I’ve managed to setup a Large Language Model that implements a Retrieval Augmented Generation or RAG architecture locally. This enables LLMs to work on your own and up-to-date data without the need of retraining. In this post, I will be going through my initial implementation of the retrieval augmented generation or RAG systems.&lt;/p&gt;
+
+&lt;h1 id=&quot;objective&quot;&gt;Objective&lt;/h1&gt;
+
+&lt;p&gt;The objective of this exercise is to setup and run a RAG implementation using LLMs with generally available hardware locally (no dedicated GPUs and no cloud!). &lt;em&gt;I want to remove the barrier of expensive hardware and giving cloud providers more money and my information.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;what-is-rag&quot;&gt;What is RAG?&lt;/h1&gt;
+
+&lt;p&gt;Retrieval Augmented Generation or RAG for short allows the LLM to work with new data without the need of retraining. RAG has the following components:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Vector Database (Elasticsearch, Pinecone, PostgreSQL Vector Plugin)&lt;/li&gt;
+  &lt;li&gt;Embedding Model (maybe different from the actual LLM)&lt;/li&gt;
+  &lt;li&gt;Large Language Model&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;general-flow&quot;&gt;General Flow&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230926/rag_diagram.png&quot; alt=&quot;rag-diagram&quot; /&gt;
+&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Data Ingestion: Using an embedding model, the data will be ingested (texts in this case) into this database by converting them into vectors. As an example, the following sentece “A TIFF file is a raster format.” will be converted into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[0.211, 0.113, 0.44112, -0.1294]&lt;/code&gt; vector and this vector will be stored into the vector database.&lt;/li&gt;
+  &lt;li&gt;Search and Retrieval: When a question comes in “Are TIFF files raster data?” the question will also be converted into a vector and the vector database will implement a clustering algorithm like approximate nearest neighbor, K-nearest neighbor, inverted index, etc.&lt;/li&gt;
+  &lt;li&gt;Summarization and Response: The returned results will be passed to the LLM and execute summarization task and thus generate the final output.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;the-setup&quot;&gt;The Setup&lt;/h1&gt;
+
+&lt;h2 id=&quot;hardware&quot;&gt;Hardware&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;What I want to achieve in this experiment is to run the process without very expensive components like GPUs.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;CPU: Ryzen 4500u&lt;/li&gt;
+  &lt;li&gt;RAM: 16GB&lt;/li&gt;
+  &lt;li&gt;GPU: Integrated GPU (6 graphics cores)&lt;/li&gt;
+  &lt;li&gt;Operating: Ubuntu 22.04 running in WSL&lt;/li&gt;
+  &lt;li&gt;Swap: 0&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;models-and-data&quot;&gt;Models and Data:&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;The models came from huggingface.co.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Large Language Model: llama-2-7b-chat.Q4_0.gguf&lt;/li&gt;
+  &lt;li&gt;Embedding Model: sentence-transformers/all-mpnet-base-v2&lt;/li&gt;
+  &lt;li&gt;Data: QGIS 3.22 User Manual (1393 pages with files size of 50.9mb)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;libraries&quot;&gt;Libraries:&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;You may need to extra setup to configure LlamaCPP properly for your own hardware.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Langchain&lt;/li&gt;
+  &lt;li&gt;LlamaCPP&lt;/li&gt;
+  &lt;li&gt;Llama Index&lt;/li&gt;
+  &lt;li&gt;PyPDF (to extract texts from PDFs)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;the-experiment&quot;&gt;The Experiment&lt;/h1&gt;
+
+&lt;p&gt;I have created a notebook to go through the actual code &lt;a href=&quot;https://github.com/lkpanganiban/llama-index-experiment&quot;&gt;here.&lt;/a&gt; In this post, I will just go through my observations of the processing flow.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Data ingestion will take the longest part of the entire process and maybe resource intensive depending on the volume in terms of pages and files. This step will do the extraction from the source file, conversion of text into vector data, and store into the vector DB. In this exercise, it took about &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;12-15 mins&lt;/code&gt; to ingest a 1,393 page document and consumes about 6 GB of RAM for a 6 core machine. &lt;em&gt;If your machine has more CPU cores or if the system has GPU this will be faster to run.&lt;/em&gt;
+    &lt;p align=&quot;center&quot;&gt;
+   &lt;img src=&quot;/static/assets/img/blog/20230926/ingestion-usage.png&quot; alt=&quot;ingestion-usage&quot; /&gt;
+&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Depending on the model parameters like chunk_overlap, temperature, context_window, etc., the results may vary. There is a need to explore the sensitivity of each parameter in terms of generation performance.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The inferencing section, executed about &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2-3 mins&lt;/code&gt;.
+    &lt;p align=&quot;center&quot;&gt;
+   &lt;img src=&quot;/static/assets/img/blog/20230926/llama-result.png&quot; alt=&quot;llama-result&quot; /&gt;
+&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The generated results have some errors and redundant steps.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;experiment-notes&quot;&gt;Experiment Notes&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Returned results from the Vector DB (what are the paragraphs or sentences - do they make sense?)&lt;/li&gt;
+  &lt;li&gt;Prompt setup to implement summarization (from the returned results, what is the prompt used?)&lt;/li&gt;
+  &lt;li&gt;Model itself (since we are using a quantized model which uses int4 there maybe a loss of precision which affected the generated results. There is also how the model was trained where it will affect the quality of the results.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;next-steps&quot;&gt;Next Steps&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Try out other models more specialized to my use case which is more of an instruction type instead of chat.&lt;/li&gt;
+  &lt;li&gt;Play around the with parameters like chunk_overlap, temperature, context_window, etc.&lt;/li&gt;
+  &lt;li&gt;Extend the RAG system to not only focus in a vector setup but also with a mixture of text data (Bag of Words).&lt;/li&gt;
+  &lt;li&gt;Incorporate evaluation, where given multiple models, it will evaluate which output will be used as the main result or mix the outputs of these models. &lt;em&gt;This is like ensemble learning where you a mixed of experts/models to generate a result.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Create agents on-top of RAGs, where it will control a software using the outputs of the model. &lt;em&gt;Given the outputs above, control QGIS to do the steps stated by LLM.&lt;/em&gt; I see the use case of e.g. I want to generate a flood model using the data in folder A where the model will follow papers X, Y, Z.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;notes-takeaways-opinions&quot;&gt;Notes, Takeaways, Opinions&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The outputs generated by the LLM may not be 100% accurate but for me this is enough to get me started or point me to the right direction. &lt;em&gt;You will still need to evaluate the outputs if it makes sense.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;The barrier of going into the LLM space is still there but it is going down exponentially with better architecture, tooling, and ecosystem.&lt;/li&gt;
+  &lt;li&gt;For me, the better use for LLMs will be in the RAG type applications where every individual, company, or organization have their “secret” sauce. Hence, running it locally is of great value instead of offloading the system to an external provider.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 26 Sep 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/machine-learning/2023/09/26/RAG-with-LlamaIndex.html</link>
+        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/09/26/RAG-with-LlamaIndex.html</guid>
+        
+        <category>machine-learning</category>
+        
+        
+        <category>Machine-learning</category>
+        
+      </item>
+    
+      <item>
+        <title>My Journey with LLMs</title>
+        <description>&lt;p&gt;Large Language Models or LLMs for short is a type of generative AI that produces content given a set of constraints or parameters. It is quite useful in doing specific and nuanced tasks like replying to emails, creating essays, summarization, code generation, etc. In this post, I will not be focusing on the impacts of such models or its effects to society in general. I will be writing about my own exploration of the landscape. This is still an incomplete journey since the ecosystem is still maturing.&lt;/p&gt;
+
+&lt;p&gt;I will show how I use LLMs to optimize my workflow as a software engineer. I will mention various&lt;/p&gt;
+
+&lt;h1 id=&quot;programming-and-coding-assistants&quot;&gt;Programming and Coding Assistants&lt;/h1&gt;
+
+&lt;p&gt;Since I am a programmer or software developer, I will showcase how I use some tools that are LLM driven like &lt;a href=&quot;https://codeium.com/&quot;&gt;Codeium&lt;/a&gt; and &lt;a href=&quot;https://openai.com/blog/chatgpt&quot;&gt;OpenAIs ChatGPT&lt;/a&gt;. The uses of LLMs in software development are very wide, from code completion, debugging, and generation of complete applications. I subscribe to the idea the CRUD apps (retrieving data from DBs) will be automated since a lot of CRUD apps are templated anyways. Hence as a programmer, you are always taught to be a problem solver vs a pure coder.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;I think of coding assistants like the Advanced Driver-Assistance Systems (Adaptive Cruise Control, Lane Centering) in most modern cars.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;codeium&quot;&gt;Codeium&lt;/h1&gt;
+
+&lt;p&gt;When I first encountered Codeium, I am ∏ooking for an alternative to &lt;a href=&quot;https://github.com/features/copilot&quot;&gt;Github Copilot&lt;/a&gt; this is due to the barrier of entry of Copilot. In the Philippines, $10/month or $100/year or roughly (5-6K Php) is already a substantial investment for a developer who is starting out. Hence, I have decided to look for alternatives that provides a “free-tier”. LLMs in programming help you to think about the problem or task more as against to writing the syntax. As they say even if it doesn’t do the 100% but it created 50% or even 70% of the task then it is already an improvement.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-setup-and-features&quot;&gt;The Setup and Features&lt;/h1&gt;
+
+&lt;p&gt;Codeium has a an extension to VSCode where it provides a panel and inline functions. Some of these functions are the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Code Completion&lt;/li&gt;
+  &lt;li&gt;Test Generation&lt;/li&gt;
+  &lt;li&gt;Code Explanation&lt;/li&gt;
+  &lt;li&gt;Refactoring&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Codeium also provides a chat panel, where you can use it like ChatGPT where you can ask some questions regarding the code especially in the debugging process.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-chatpanel-1.png&quot; alt=&quot;codeium-chat-panel-1&quot; /&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-chatpanel-2.png&quot; alt=&quot;codeium-chat-panel-2&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;As you can see in the screenshot above, Codeium presents a variety of boilerplates for different languages like Python, Go and Typescript. It also allows you to implement debugging instead of going to Stack Overflow.&lt;/p&gt;
+
+&lt;h1 id=&quot;how-i-used-codeium&quot;&gt;How I used Codeium&lt;/h1&gt;
+
+&lt;p&gt;I find it very useful in its ability to generate parsing scripts (RegEx, JSON, and data manipulation), creating templates and boilerplates (folder structures and bootstrapping applications), framework introductions (I started learning ReactJS only using 1 tutorial and Codeium).&lt;/p&gt;
+
+&lt;h2 id=&quot;boilerplates&quot;&gt;Boilerplates&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-chatpanel-boilerplates-1.png&quot; alt=&quot;codeium-chat-panel-boilerplate&quot; width=&quot;50%&quot; /&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-boilerplate-result-1.png&quot; alt=&quot;boilerplate-result&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;As a start of my experiment, I have created a boilerplate for ReactJS. What I usually do, is prompt it to create a Python script that generates a folder and file structure (left). The generated script will generate the following folder and file structure (right). &lt;em&gt;Note: The recommended approach when generating a ReactJS application is to use a framework like NextJS&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Boilerplates don’t only stop at file or folder generation, the typical scripts of parsing values can also be created like parsing strings using regex. We can see an example below, the solution provided by Codeium(top) as against to the “actual” solution (bottom).&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-boilerplate-result-2.png&quot; alt=&quot;boilerplate-result-2&quot; width=&quot;45%&quot; /&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-boilerplate-result-3.png&quot; alt=&quot;boilerplate-result-3&quot; width=&quot;45%&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;In a pure compute perspective, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;re.split&lt;/code&gt; is more expensive vs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;re.search&lt;/code&gt; this is due to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;re.search&lt;/code&gt; stops the searching once it finds the occurence. Do note though, this will depend on the use case of the application and where it will be used. That is why, as software engineer, when using these tools, you need to feed the “Coding Assistants” the context for it to properly suggest the best solution.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Given the usecases above regarding boilerplates, context is critical in the quality of the outputs of the Codeium. This is also true in the practical sense as well, imagine a product owner or business analyst don’t provide you the proper context, how will you develop the proper solution.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;debugging-code-suggestions-and-testing&quot;&gt;Debugging, Code Suggestions, and Testing&lt;/h2&gt;
+
+&lt;p&gt;Debugging is a common occurrence is software development. Codeium like any other coding assistants help you in debugging code like explaining the stacktrace or errors from console.&lt;/p&gt;
+
+&lt;p&gt;Similar to boilerplates, code suggestions and completions is also part of Codeium, where it helps in saving time typing a lot of boilerplate code especially when you are working with frameworks where there is a specific way of coding e.g. REST Endpoints or model declaration. Based on my experience, depending on the maturity of the library or framework this can be a hit or miss since it may hallucinate due to its assumptions of the best practices.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-code-suggestions.png&quot; alt=&quot;code-suggestions&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;You will see which frameworks or libraries break the “recommended” way of doing things.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Testing is another activity in the life of a software developer. Creating unit tests is a chore since it involves a lot of boilerplate especially in the class and function calls of an API or library. I typically use Codeium as a way to generate these boilerplate test structures and I modify on the logic or the actual test scenario that I want to do.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-code-test-1.png&quot; alt=&quot;code-test&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;other-stuff---refactoring-code-explanation-and-documentation&quot;&gt;Other Stuff - Refactoring, Code Explanation, and Documentation&lt;/h2&gt;
+
+&lt;p&gt;Refactoring is essential when you need to implement re-writes either to make it efficient or maintainable.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-code-refactor.png&quot; alt=&quot;code-refactor&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;When doing refactors, you must ensure that the proposed code does not change the context or the main functionality itself. That is why before refactoring, you must establish your tests.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;When going through codebases whether trying to understand a library or plowing through legacy ones, you need to understand the logic or the function. You’ll be lucky if the codebase has comments or documentation. This is where the explain functionality is very useful. It provides a general idea of the highlighted code.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-code-explain-1.png&quot; alt=&quot;code-explain-1&quot; /&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-code-explain-2.png&quot; alt=&quot;code-explain-2&quot; width=&quot;55%&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Your mileage will vary depending on the quality of the code.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;As part of being a software engineer is doing documentation. Documentation is one of the most nuanced part of being a developer besides meetings. Codeium provides a way to create docstrings to functions and classes.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-doc-strings-1.png&quot; alt=&quot;code-docstrings-1&quot; /&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20230923/image-doc-strings-2.png&quot; alt=&quot;code-docstrings-2&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h1 id=&quot;takeaways&quot;&gt;Takeaways&lt;/h1&gt;
+
+&lt;p&gt;Overall, I like the functionality and the goals of Codeium or coding assistants in general. It aims to automate the nuances of being a software engineer. Something worth highlighting is that being a software engineer does not only revolve around writing code, but also the ability to define the problem and solution. Coding assistants like ADAS systems are only tools for you to become more efficient in software development. These coding assistants may not work 100% of the time but they are good enough for you to start somewhere. The general outlook of these coding assistants is that these will become more mature and robust as new models and better data will be generated and fed into these models.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 23 Sep 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/machine-learning/2023/09/23/LLM-journey.html</link>
+        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/09/23/LLM-journey.html</guid>
+        
+        <category>machine-learning</category>
+        
+        
+        <category>Machine-learning</category>
+        
+      </item>
+    
+      <item>
+        <title>Geospatial Stack</title>
+        <description>&lt;p&gt;The Geospatial Stack covers various technologies from backend to frontend. &lt;em&gt;The following list of the systems below is not a definitive guide hence the developer requires research about other technologies and framworks.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;full-systems&quot;&gt;Full Systems&lt;/h1&gt;
+
+&lt;p&gt;Full geospatial systems, tend to be specialized applications. From a content or data management system to a drone processing application. It needs to be considered that in order to extend these type of systems a deeper understanding of the components like backend and frontend are needed.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://geonode.org/&quot;&gt;GeoNode&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.opendronemap.org/webodm/&quot;&gt;WebODM&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;frontend&quot;&gt;Frontend&lt;/h1&gt;
+
+&lt;p&gt;Frontend frameworks are responsible for displaying and visualizing spatial information. Some frontend frameworks contain geospatial processing functions that allow for client side computing. Note that while client side processing is possible using these frameworks, they still need to download the dataset.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.mapbox.com/mapbox-gl-js/guides/&quot;&gt;Mapbox&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://turfjs.org/&quot;&gt;Turf JS&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://leafletjs.com/&quot;&gt;Leaflet JS&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://openlayers.org/&quot;&gt;Openlayers&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://deck.gl/&quot;&gt;Deck.gl&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;backend&quot;&gt;Backend&lt;/h1&gt;
+
+&lt;p&gt;Backend technologies cover databases, compute, and other frameworks. Database technologies whether SQL or NoSQL have some support to geospatial data management, processing and queries like Elasticsearch, MariaDB and MongoDB but not all operations are supported like storing of rasters. I have identified some areas and technologies that can be used to build the backend components of a geospatial application.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Data Management and Data Serving&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://postgis.net/&quot;&gt;PostGIS&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://protomaps.com/docs/pmtiles/&quot;&gt;Geoserver&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://protomaps.com/docs/pmtiles/&quot;&gt;PM Tiles&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mapserver.org/&quot;&gt;Mapserver&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;API Development&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.djangoproject.com/en/4.2/ref/contrib/gis/&quot;&gt;GeoDjango&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Compute&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://sedona.apache.org/1.4.1/&quot;&gt;Sedona&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://geotrellis.io/&quot;&gt;Geotrellis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Overall the technologies above are the general components in developing a web-based geospatial application. These technologies can be extended to desktop, mobile or even machine learning systems.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 06 Sep 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/data-science/2023/09/06/geospatial-stack.html</link>
+        <guid isPermaLink="true">http://localhost:4000/data-science/2023/09/06/geospatial-stack.html</guid>
+        
+        <category>data-science</category>
+        
+        <category>geo</category>
+        
+        
+        <category>Data-science</category>
+        
+      </item>
+    
+      <item>
+        <title>The Data Stack</title>
+        <description>&lt;p&gt;Today in any organization, they are looking for ways to leverage their data and considering developing a data platform. Hence they are looking for tools and systems to help build such platform.&lt;/p&gt;
+
+&lt;p&gt;I did a thought process of researching about the components of a data platform and it pointed me to the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Data Governance&lt;/li&gt;
+  &lt;li&gt;Extract Transform Tools (ETL) or Task Management&lt;/li&gt;
+  &lt;li&gt;Data Warehousing&lt;/li&gt;
+  &lt;li&gt;Business Analytics and Dashboarding&lt;/li&gt;
+  &lt;li&gt;Data Annotation and Quality Assurance&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here are the following tools which I found during my search of doing the exercise.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;These cover cloud and open source systems which maybe useful to anyone doing their research.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;data-governance&quot;&gt;Data governance:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cloud
+    &lt;ul&gt;
+      &lt;li&gt;Azure Purview: &lt;a href=&quot;https://azure.microsoft.com/en-us/products/purview&quot; title=&quot;https://azure.microsoft.com/en-us/products/purview&quot;&gt;https://azure.microsoft.com/en-us/products/purview&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Google Dataplex: &lt;a href=&quot;https://cloud.google.com/dataplex&quot; title=&quot;https://cloud.google.com/dataplex&quot;&gt;https://cloud.google.com/dataplex&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;aws lake formation: &lt;a href=&quot;https://docs.aws.amazon.com/lake-formation/latest/dg/how-it-works.html&quot; title=&quot;https://docs.aws.amazon.com/lake-formation/latest/dg/how-it-works.html&quot;&gt;https://docs.aws.amazon.com/lake-formation/latest/dg/how-it-works.html&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Open Source:
+    &lt;ul&gt;
+      &lt;li&gt;Apache Atlas: &lt;a href=&quot;https://atlas.apache.org/#/&quot; title=&quot;https://atlas.apache.org/#/&quot;&gt;https://atlas.apache.org/#/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Amunsden: &lt;a href=&quot;https://www.amundsen.io/amundsen/&quot; title=&quot;https://www.amundsen.io/amundsen/&quot;&gt;https://www.amundsen.io/amundsen/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Datahub: &lt;a href=&quot;https://datahubproject.io/&quot; title=&quot;https://datahubproject.io/&quot;&gt;https://datahubproject.io/&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;etl&quot;&gt;ETL&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cloud
+    &lt;ul&gt;
+      &lt;li&gt;Azure Data Factory: &lt;a href=&quot;https://azure.microsoft.com/en-us/products/data-factory/&quot; title=&quot;https://azure.microsoft.com/en-us/products/data-factory/&quot;&gt;https://azure.microsoft.com/en-us/products/data-factory/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Amazon Data pipeline: &lt;a href=&quot;https://aws.amazon.com/datapipeline/&quot; title=&quot;https://aws.amazon.com/datapipeline/&quot;&gt;https://aws.amazon.com/datapipeline/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Google Cloud fusion: &lt;a href=&quot;https://cloud.google.com/data-fusion/&quot; title=&quot;https://cloud.google.com/data-fusion/&quot;&gt;https://cloud.google.com/data-fusion/&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Open source:
+    &lt;ul&gt;
+      &lt;li&gt;Airbyte: &lt;a href=&quot;https://airbyte.com/&quot; title=&quot;https://airbyte.com/&quot;&gt;https://airbyte.com/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Apache Nifi: &lt;a href=&quot;https://nifi.apache.org/&quot; title=&quot;https://nifi.apache.org/&quot;&gt;https://nifi.apache.org/&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;data-warehousing&quot;&gt;Data Warehousing&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cloud
+    &lt;ul&gt;
+      &lt;li&gt;Amazon Redshift: &lt;a href=&quot;https://aws.amazon.com/redshift/features/?nc=sn&amp;amp;loc=2&amp;amp;dn=1&quot; title=&quot;https://aws.amazon.com/redshift/features/?nc=sn&amp;amp;loc=2&amp;amp;dn=1&quot;&gt;https://aws.amazon.com/redshift/features/?nc=sn&amp;amp;loc=2&amp;amp;dn=1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Azure Synapse Analytics: &lt;a href=&quot;https://learn.microsoft.com/en-us/azure/synapse-analytics/overview-what-is&quot; title=&quot;https://learn.microsoft.com/en-us/azure/synapse-analytics/overview-what-is&quot;&gt;https://learn.microsoft.com/en-us/azure/synapse-analytics/overview-what-is&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Google Big Query: &lt;a href=&quot;https://cloud.google.com/bigquery/docs/introduction&quot; title=&quot;https://cloud.google.com/bigquery/docs/introduction&quot;&gt;https://cloud.google.com/bigquery/docs/introduction&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Open source:
+    &lt;ul&gt;
+      &lt;li&gt;Dremio: &lt;a href=&quot;https://www.dremio.com/&quot; title=&quot;https://www.dremio.com/&quot;&gt;https://www.dremio.com/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Apache Hive: &lt;a href=&quot;https://hive.apache.org/&quot; title=&quot;https://hive.apache.org/&quot;&gt;https://hive.apache.org/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Apache Druid: &lt;a href=&quot;https://druid.apache.org/&quot;&gt;https://druid.apache.org/&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;business-analytics-and-dashboarding&quot;&gt;Business Analytics and Dashboarding&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cloud
+    &lt;ul&gt;
+      &lt;li&gt;PowerBI: &lt;a href=&quot;https://powerbi.microsoft.com/en-us/guidedtour/power-platform/power-bi/1/1&quot;&gt;https://powerbi.microsoft.com/en-us/guidedtour/power-platform/power-bi/1/1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;GCP Looker: &lt;a href=&quot;https://cloud.google.com/looker/&quot;&gt;https://cloud.google.com/looker/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Amazon Quicksight: &lt;a href=&quot;https://aws.amazon.com/quicksight/&quot;&gt;https://aws.amazon.com/quicksight/&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Open Source
+    &lt;ul&gt;
+      &lt;li&gt;Superset: &lt;a href=&quot;https://superset.apache.org/&quot;&gt;https://superset.apache.org/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Metabase: &lt;a href=&quot;https://www.metabase.com/&quot;&gt;https://www.metabase.com/&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;data-annotation-and-quality-assurance&quot;&gt;Data Annotation and Quality Assurance&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Open Source
+    &lt;ul&gt;
+      &lt;li&gt;Label Studio: &lt;a href=&quot;https://labelstud.io/&quot;&gt;https://labelstud.io/&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Cleanlab: &lt;a href=&quot;https://github.com/cleanlab/cleanlab&quot;&gt;https://github.com/cleanlab/cleanlab&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;geospatial&quot;&gt;Geospatial&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Open Source
+    &lt;ul&gt;
+      &lt;li&gt;Sedona: &lt;a href=&quot;https://github.com/apache/sedona&quot;&gt;https://github.com/apache/sedona&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Some of the tools above overlap with other tools. It is up to the individuals to do their research in setting up these tools.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 02 Sep 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/data-science/2023/09/02/the-data-stack.html</link>
+        <guid isPermaLink="true">http://localhost:4000/data-science/2023/09/02/the-data-stack.html</guid>
+        
+        <category>data-science</category>
+        
+        
+        <category>Data-science</category>
+        
+      </item>
+    
+      <item>
+        <title>ML Model Telemetry</title>
+        <description>&lt;p&gt;One requirement in deploying a production instance is to generate logs and telemetry. It allows a better understanding of the #software in the production setting. And the question that comes is, what do we need to log? And how do we store it?&lt;/p&gt;
+
+&lt;p&gt;There are a lot of tools and even companies that implement logging and monitoring solutions. And now, ML has become more popular, and integrating new models in a software product has become accepted. The question is, how do we monitor ML models in production?&lt;/p&gt;
+
+&lt;p&gt;We can use the current tooling in DevOps. Still, we should consider the labeling activities handled in the Human in the Loop process - like how many images were misclassified by the model? How many times did a human intervene to fix a problem? Some of these questions can be handled by a different suite of tools like tagging and labeling systems, requiring humans to check the outputs manually.&lt;/p&gt;
+
+&lt;p&gt;Something worth noting is that these systems require infrastructure and expertise to maintain and manage. That is why in implementing these types of solutions, you will need to establish your team’s skills.&lt;/p&gt;
+
+&lt;p&gt;Reference: &lt;a href=&quot;https://neptune.ai/blog/ml-model-monitoring-best-tools&quot;&gt;https://neptune.ai/blog/ml-model-monitoring-best-tools&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 11 Mar 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/machine-learning/2023/03/11/ML-Model-Telemetry.html</link>
+        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/03/11/ML-Model-Telemetry.html</guid>
+        
+        <category>machine-learning</category>
+        
+        
+        <category>Machine-learning</category>
+        
+      </item>
+    
+      <item>
+        <title>A thing called MLOps</title>
+        <description>&lt;p&gt;In the ML/AI development space, there is what they call MLOps. It has parallels and mirrors DevOps which is widely known and implemented in the software development space. They both have the same purpose of delivering software reliably and sustainably. Something must be said though, that both of these practices require resources and skills that span multiple disciplines and roles.&lt;/p&gt;
+
+&lt;p&gt;The tooling and principles between DevOps and MLOps even though they have similarities are different from each other. Hence you cannot assume that DevOps teams can also do MLOps since they have different goals and objectives, but you must ensure that there is an intersection between them.&lt;/p&gt;
+
+&lt;p&gt;If you are an organization that deals with both ML and software, you need to be efficient in both DevOps and MLOps, and you need multiple teams to handle them. That is why in some organizations if they start as a software development company, they focus on DevOps and move into MLOps when they integrate AI/ML into their products as you can see with big tech. Or if they are an AI/ML company, they start with MLOps and then move into DevOps when they begin distributing their models into production. In any case, if you are starting either MLOps or DevOps, it is important to master one first before moving to another to ensure focus and alignment throughout the organization.&lt;/p&gt;
+
+&lt;p&gt;Reference: &lt;a href=&quot;https://devops.com/mlops-vs-devops-whats-the-difference/&quot;&gt;https://devops.com/mlops-vs-devops-whats-the-difference/&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 25 Feb 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/machine-learning/2023/02/25/a-thing-called-MLOps.html</link>
+        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/02/25/a-thing-called-MLOps.html</guid>
+        
+        <category>machine-learning</category>
+        
+        
+        <category>Machine-learning</category>
+        
+      </item>
+    
+      <item>
+        <title>Using Pyarmor to Obfuscate your Python Application</title>
+        <description>&lt;p&gt;Pyarmor is a python library that allows your code to be obfuscated. I will provide a general guide on how to use &lt;a href=&quot;https://pyarmor.readthedocs.io/en/latest/usage.html&quot;&gt;Pyarmor&lt;/a&gt; to obfuscate a Django application.&lt;/p&gt;
+
+&lt;h2 id=&quot;integrating-pyarmor-with-your-code&quot;&gt;Integrating Pyarmor with your code.&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Install pyarmor with pip.&lt;/li&gt;
+  &lt;li&gt;Create a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dist&lt;/code&gt; folder. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dist&lt;/code&gt; folder will be our main working directory.&lt;/li&gt;
+  &lt;li&gt;Copy Django application’s source folder to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dist&lt;/code&gt; folder.&lt;/li&gt;
+  &lt;li&gt;Go to the folder or code you wish to obfuscate in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;src&lt;/code&gt; folder.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run the following command to obfuscate the code.&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pyarmor obfuscate --src=&quot;.&quot; -r --output=../../dist/apps/ __init__.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Open the output files and you will see that the python files are now obfuscated.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;integration-with-cryptography&quot;&gt;Integration with Cryptography&lt;/h2&gt;
+
+&lt;p&gt;One of the things that you can also combine with Pyarmor is the usage of the &lt;a href=&quot;https://cryptography.io/en/latest/&quot;&gt;Cryptography&lt;/a&gt; module which allows you to encrypt a license key in which you can integrate this into your codebase.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create an unecrypted license file which can contain e.g. expiry date.&lt;/li&gt;
+  &lt;li&gt;Use the cryptography module to encrypt the license file using a user defined key.&lt;/li&gt;
+  &lt;li&gt;Inside your application, integrate or store the user defined key used to encrypt the license file in a variable.&lt;/li&gt;
+  &lt;li&gt;Create function that will read the encrypted file and decrypt it using the user defined key.&lt;/li&gt;
+  &lt;li&gt;Obfuscate the python code using pyarmor to protect the user defined key.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Refer to the following &lt;a href=&quot;https://github.com/lkpanganiban/license-generator-toolbox&quot;&gt;repository&lt;/a&gt; for more details.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 15 Jan 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/python/2023/01/15/working-with-pyarmor-to-obfuscate.html</link>
+        <guid isPermaLink="true">http://localhost:4000/python/2023/01/15/working-with-pyarmor-to-obfuscate.html</guid>
+        
+        <category>python</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>Compiling and Packaging Python Applications into Single Binary</title>
+        <description>&lt;p&gt;One of the needs for any software is a way to distribute your system in a single package. I will provide a general guide on how to use Nuitka to build a python binary.&lt;/p&gt;
+
+&lt;h2 id=&quot;integrating-nuitka-with-your-code&quot;&gt;Integrating Nuitka with your code.&lt;/h2&gt;
+
+&lt;p&gt;We will use the library &lt;a href=&quot;https://github.com/Nuitka/Nuitka&quot;&gt;Nuitka&lt;/a&gt;. Nuitka is a Python compiler that allows us to achieve the single binary goal.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create an entrypoint for the Nuitka.&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from sample_python_binary.run import main
+if __name__ == &apos;__main__&apos;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run the following command to build the package&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;time env/bin/python -m nuitka \
+        --onefile \
+        --include-data-files=data_dir/ml_model.txt=data_dir/ \
+        --include-data-files=data_dir/sample_license=data_dir/ \
+        --include-module=sqlalchemy.sql.default_comparator \
+        --include-module=sqlalchemy.dialects \
+        --linux-onefile-icon=data_dir/python3.xpm \
+        sample_binary.py # the entrypoint you have created earlier
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;build-dependency-options&quot;&gt;Build Dependency Options&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Data files: data files are like needed configs required by your program like ML models or some text files that you need for import.&lt;/li&gt;
+  &lt;li&gt;Module files: module files are the other dependency of your program. Nuitka does a good job of integrating your other python dependencies but sometimes these dependencies have an obscure way of import, this is where the option of importing module files.&lt;/li&gt;
+  &lt;li&gt;Linux Onefile icon: if you have a custom icon that you want to represent your program with.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Once you have run the program above you will now have compiled version of your python application.&lt;/p&gt;
+
+&lt;h2 id=&quot;issues&quot;&gt;Issues&lt;/h2&gt;
+
+&lt;p&gt;As mentioned, Nuitka does a good job of compiling your application but it has some nuances that you need to look out for.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;System dependencies: you will still need to install the system dependencies of your program. This is where containerization comes in.&lt;/li&gt;
+  &lt;li&gt;Compiling platform: Nuitka is not platform agnostic meaning you will need to compile your code from the target platform e.g. If the target platform is linux you need to compile in linux.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 14 Jan 2023 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/python/2023/01/14/creating-a-python-binary.html</link>
+        <guid isPermaLink="true">http://localhost:4000/python/2023/01/14/creating-a-python-binary.html</guid>
+        
+        <category>python</category>
+        
+        <category>devops</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>Setting up Windows Subsystem for Linux (WSL) with Vagrant</title>
+        <description>&lt;p&gt;Windows Subsystem for Linux or WSL is a powerful tool for implementing your development workflow in Windows 10. It allows you to execute BASH and other development setups. Vagrant is an abstraction layer where it provides an interface for you to work on a VM. This guide will just go through the different steps in configuring this development environment.&lt;/p&gt;
+
+&lt;h2 id=&quot;steps&quot;&gt;Steps&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Configure and setup the Windows Subsystem for Linux. Here is the link for the in-depth setup and configuration of WSL. &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/wsl/install-win10&quot;&gt;Setup WSL in Windows 10&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Install Virtualbox and Vagrant for windows. &lt;em&gt;You may need to restart your machine after installing vagrant.&lt;/em&gt; &lt;a href=&quot;https://www.vagrantup.com/downloads.html&quot;&gt;Vagarant Installer&lt;/a&gt; &lt;a href=&quot;https://www.virtualbox.org/wiki/Downloads&quot;&gt;Virtualbox Installer&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Install vagrant to the WSL environment. &lt;em&gt;The version of your vagrant must be the same as the version you have installed in windows.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;In your WSL terminal, configure the following WSL environment variables:&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS=&quot;1&quot;
+export PATH=&quot;$PATH:/mnt/c/Program Files/Oracle/VirtualBox&quot;
+export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH=&quot;/mnt/e/Development&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;In your Vagrantfile, add the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v.customize&lt;/code&gt; line in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config.vm.provider&lt;/code&gt;:&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;v.customize [ &quot;modifyvm&quot;, :id, &quot;--uartmode1&quot;, &quot;disconnected&quot; ]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;You can now run vagrant with WSL.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Tue, 23 Oct 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/devops/2018/10/23/setting-up-wsl-with-vagrant.html</link>
+        <guid isPermaLink="true">http://localhost:4000/devops/2018/10/23/setting-up-wsl-with-vagrant.html</guid>
+        
+        <category>wsl</category>
+        
+        <category>vagrant</category>
+        
+        <category>devops</category>
+        
+        
+        <category>Devops</category>
+        
+      </item>
+    
+      <item>
+        <title>Backing up and Restoring Mongo DB</title>
+        <description>&lt;p&gt;Mongo DB is a type NoSQL database which treats your data like JSON- documents (key-value pair). In this post, I will be showing some steps in backing up and restoring a Mongo DB.&lt;/p&gt;
+
+&lt;p&gt;We will use Mongo DB’s built-in utility to backup and restore data.&lt;/p&gt;
+
+&lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Dumping Mongo DB data&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mongodump --db mongo-db-name --collection mongo-collection-name --out - | gzip &amp;gt;  mongo-collection-name-backup.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Restoring Mongo DB data&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gunzip -c mongo-collection-name.gz &amp;gt; mongo-collection-name-backup.bson
+mongorestore --db mongo-db-name --collection mongo-collection-name mongo-collection-name-backup.bson
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sat, 22 Sep 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/database/2018/09/22/backing-up-restore-mongodb.html</link>
+        <guid isPermaLink="true">http://localhost:4000/database/2018/09/22/backing-up-restore-mongodb.html</guid>
+        
+        <category>mongodb</category>
+        
+        
+        <category>Database</category>
+        
+      </item>
+    
+      <item>
+        <title>Backup and Restore with PostgreSQL</title>
+        <description>&lt;p&gt;PostgreSQL is a very powerful SQL database. It provides various fields in storing different data types like date, json, text, arrays, etc. It also contains some backup and restore mechanism which you can use to safeguard your data. In the following section, I will demonstrate how you can backup and restore your PostgreSQL database.&lt;/p&gt;
+
+&lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Backing up PostgreSQL with pg_dump&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export PGPASSWORD=&quot;&amp;lt;password&amp;gt;&quot; | pg_dump -c -h &amp;lt;postgresql-host&amp;gt; -U &amp;lt;user&amp;gt; -d &amp;lt;database-name&amp;gt; | gzip &amp;gt; ~/&amp;lt;path&amp;gt;/&amp;lt;database-name&amp;gt;.sql.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Restoring a PostgreSQL backup&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;export PGPASSWORD=&quot;&amp;lt;password&amp;gt;&quot; | pg_restore -c -h &amp;lt;postgresql-host&amp;gt; -U &amp;lt;user&amp;gt; -d &amp;lt;database-name&amp;gt; [dumpfile_name].dump
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 21 Sep 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/database/2018/09/21/backing-up-postgresql.html</link>
+        <guid isPermaLink="true">http://localhost:4000/database/2018/09/21/backing-up-postgresql.html</guid>
+        
+        <category>postgresql</category>
+        
+        
+        <category>Database</category>
+        
+      </item>
+    
+      <item>
+        <title>Backing up and restoring Elasticsearch data with Elasticdump</title>
+        <description>&lt;p&gt;Elasticsearch is a type NoSQL database which allows you to store unstructured data. It is highly performant and scalable. It allows you to implement full text searches and aggregations. This is very useful when dealing with large amounts of data.&lt;/p&gt;
+
+&lt;p&gt;Elasticdump is a NodeJS based package. This allows you to backup and restore Elasticsearch data. Its command line interface is quite intuitive to use.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install -g elasticdump
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Backing up ES index&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;elasticdump --input=http://elastic-search.mydomain.com:9200/my_index --output=/backups/my_index.json --limit=1000 --fileSize=1gb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Restoring ES index from a file&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;elasticdump --input=/backups/my_index.json --output=http://elastic-search.mydomain.com:9200/my_index --limit=1000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;issues&quot;&gt;Issues&lt;/h2&gt;
+
+&lt;h3 id=&quot;data-too-big&quot;&gt;Data too big&lt;/h3&gt;
+
+&lt;p&gt;Under the hood, elasticdump uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSON.stringify&lt;/code&gt; to convert data objects into actual strings to be stored into a file but this causes some issues if the data is just too big. To overcome this, I have created a &lt;a href=&quot;https://github.com/lkpanganiban/python-elasticdump&quot;&gt;python implementation&lt;/a&gt; of elasticdump. This is still a work in progress, I would love if anyone can help in the project.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 21 Sep 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/database/2018/09/21/backing-up-elasticsearch-with-elasticdump.html</link>
+        <guid isPermaLink="true">http://localhost:4000/database/2018/09/21/backing-up-elasticsearch-with-elasticdump.html</guid>
+        
+        <category>elasticsearch</category>
+        
+        <category>elasticdump</category>
+        
+        
+        <category>Database</category>
+        
+      </item>
+    
+  </channel>
+</rss>
