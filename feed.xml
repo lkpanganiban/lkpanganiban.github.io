@@ -3,10 +3,10 @@
   <channel>
     <title>lkpanganiban</title>
     <description>Ian&apos;s blog,use Jekyll and github pages.</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 29 Oct 2023 06:38:47 +0800</pubDate>
-    <lastBuildDate>Sun, 29 Oct 2023 06:38:47 +0800</lastBuildDate>
+    <link>https://www.lkpangnaiban.com/</link>
+    <atom:link href="https://www.lkpangnaiban.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 29 Oct 2023 06:44:32 +0800</pubDate>
+    <lastBuildDate>Sun, 29 Oct 2023 06:44:32 +0800</lastBuildDate>
     <generator>Jekyll v3.9.3</generator>
     
       <item>
@@ -36,8 +36,8 @@
 &lt;p&gt;Overall, I am still exploring the router setup and expanding my research with multi-modal language models.&lt;/p&gt;
 </description>
         <pubDate>Wed, 11 Oct 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/machine-learning/2023/10/11/chains-with-LLMs.html</link>
-        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/10/11/chains-with-LLMs.html</guid>
+        <link>https://www.lkpangnaiban.com/machine-learning/2023/10/11/chains-with-LLMs.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/machine-learning/2023/10/11/chains-with-LLMs.html</guid>
         
         <category>machine-learning</category>
         
@@ -99,8 +99,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 30 Sep 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/machine-learning/2023/09/30/mixed-RAGs.html</link>
-        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/09/30/mixed-RAGs.html</guid>
+        <link>https://www.lkpangnaiban.com/machine-learning/2023/09/30/mixed-RAGs.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/machine-learning/2023/09/30/mixed-RAGs.html</guid>
         
         <category>machine-learning</category>
         
@@ -222,8 +222,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/machine-learning/2023/09/26/RAG-with-LlamaIndex.html</link>
-        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/09/26/RAG-with-LlamaIndex.html</guid>
+        <link>https://www.lkpangnaiban.com/machine-learning/2023/09/26/RAG-with-LlamaIndex.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/machine-learning/2023/09/26/RAG-with-LlamaIndex.html</guid>
         
         <category>machine-learning</category>
         
@@ -341,8 +341,8 @@
 &lt;p&gt;Overall, I like the functionality and the goals of Codeium or coding assistants in general. It aims to automate the nuances of being a software engineer. Something worth highlighting is that being a software engineer does not only revolve around writing code, but also the ability to define the problem and solution. Coding assistants like ADAS systems are only tools for you to become more efficient in software development. These coding assistants may not work 100% of the time but they are good enough for you to start somewhere. The general outlook of these coding assistants is that these will become more mature and robust as new models and better data will be generated and fed into these models.&lt;/p&gt;
 </description>
         <pubDate>Sat, 23 Sep 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/machine-learning/2023/09/23/LLM-journey.html</link>
-        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/09/23/LLM-journey.html</guid>
+        <link>https://www.lkpangnaiban.com/machine-learning/2023/09/23/LLM-journey.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/machine-learning/2023/09/23/LLM-journey.html</guid>
         
         <category>machine-learning</category>
         
@@ -405,8 +405,8 @@
 &lt;p&gt;Overall the technologies above are the general components in developing a web-based geospatial application. These technologies can be extended to desktop, mobile or even machine learning systems.&lt;/p&gt;
 </description>
         <pubDate>Wed, 06 Sep 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/data-science/2023/09/06/geospatial-stack.html</link>
-        <guid isPermaLink="true">http://localhost:4000/data-science/2023/09/06/geospatial-stack.html</guid>
+        <link>https://www.lkpangnaiban.com/data-science/2023/09/06/geospatial-stack.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/data-science/2023/09/06/geospatial-stack.html</guid>
         
         <category>data-science</category>
         
@@ -533,8 +533,8 @@
 &lt;p&gt;Some of the tools above overlap with other tools. It is up to the individuals to do their research in setting up these tools.&lt;/p&gt;
 </description>
         <pubDate>Sat, 02 Sep 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/data-science/2023/09/02/the-data-stack.html</link>
-        <guid isPermaLink="true">http://localhost:4000/data-science/2023/09/02/the-data-stack.html</guid>
+        <link>https://www.lkpangnaiban.com/data-science/2023/09/02/the-data-stack.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/data-science/2023/09/02/the-data-stack.html</guid>
         
         <category>data-science</category>
         
@@ -556,8 +556,8 @@
 &lt;p&gt;Reference: &lt;a href=&quot;https://neptune.ai/blog/ml-model-monitoring-best-tools&quot;&gt;https://neptune.ai/blog/ml-model-monitoring-best-tools&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 11 Mar 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/machine-learning/2023/03/11/ML-Model-Telemetry.html</link>
-        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/03/11/ML-Model-Telemetry.html</guid>
+        <link>https://www.lkpangnaiban.com/machine-learning/2023/03/11/ML-Model-Telemetry.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/machine-learning/2023/03/11/ML-Model-Telemetry.html</guid>
         
         <category>machine-learning</category>
         
@@ -577,8 +577,8 @@
 &lt;p&gt;Reference: &lt;a href=&quot;https://devops.com/mlops-vs-devops-whats-the-difference/&quot;&gt;https://devops.com/mlops-vs-devops-whats-the-difference/&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 25 Feb 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/machine-learning/2023/02/25/a-thing-called-MLOps.html</link>
-        <guid isPermaLink="true">http://localhost:4000/machine-learning/2023/02/25/a-thing-called-MLOps.html</guid>
+        <link>https://www.lkpangnaiban.com/machine-learning/2023/02/25/a-thing-called-MLOps.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/machine-learning/2023/02/25/a-thing-called-MLOps.html</guid>
         
         <category>machine-learning</category>
         
@@ -622,8 +622,8 @@
 &lt;p&gt;Refer to the following &lt;a href=&quot;https://github.com/lkpanganiban/license-generator-toolbox&quot;&gt;repository&lt;/a&gt; for more details.&lt;/p&gt;
 </description>
         <pubDate>Sun, 15 Jan 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/python/2023/01/15/working-with-pyarmor-to-obfuscate.html</link>
-        <guid isPermaLink="true">http://localhost:4000/python/2023/01/15/working-with-pyarmor-to-obfuscate.html</guid>
+        <link>https://www.lkpangnaiban.com/python/2023/01/15/working-with-pyarmor-to-obfuscate.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/python/2023/01/15/working-with-pyarmor-to-obfuscate.html</guid>
         
         <category>python</category>
         
@@ -684,8 +684,8 @@ if __name__ == &apos;__main__&apos;:
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 14 Jan 2023 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/python/2023/01/14/creating-a-python-binary.html</link>
-        <guid isPermaLink="true">http://localhost:4000/python/2023/01/14/creating-a-python-binary.html</guid>
+        <link>https://www.lkpangnaiban.com/python/2023/01/14/creating-a-python-binary.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/python/2023/01/14/creating-a-python-binary.html</guid>
         
         <category>python</category>
         
@@ -724,8 +724,8 @@ export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH=&quot;/mnt/e/Development&quot;
 &lt;/ol&gt;
 </description>
         <pubDate>Tue, 23 Oct 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/devops/2018/10/23/setting-up-wsl-with-vagrant.html</link>
-        <guid isPermaLink="true">http://localhost:4000/devops/2018/10/23/setting-up-wsl-with-vagrant.html</guid>
+        <link>https://www.lkpangnaiban.com/devops/2018/10/23/setting-up-wsl-with-vagrant.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/devops/2018/10/23/setting-up-wsl-with-vagrant.html</guid>
         
         <category>wsl</category>
         
@@ -762,8 +762,8 @@ mongorestore --db mongo-db-name --collection mongo-collection-name mongo-collect
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sat, 22 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/database/2018/09/22/backing-up-restore-mongodb.html</link>
-        <guid isPermaLink="true">http://localhost:4000/database/2018/09/22/backing-up-restore-mongodb.html</guid>
+        <link>https://www.lkpangnaiban.com/database/2018/09/22/backing-up-restore-mongodb.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/database/2018/09/22/backing-up-restore-mongodb.html</guid>
         
         <category>mongodb</category>
         
@@ -793,8 +793,8 @@ mongorestore --db mongo-db-name --collection mongo-collection-name mongo-collect
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 21 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/database/2018/09/21/backing-up-postgresql.html</link>
-        <guid isPermaLink="true">http://localhost:4000/database/2018/09/21/backing-up-postgresql.html</guid>
+        <link>https://www.lkpangnaiban.com/database/2018/09/21/backing-up-postgresql.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/database/2018/09/21/backing-up-postgresql.html</guid>
         
         <category>postgresql</category>
         
@@ -837,8 +837,8 @@ mongorestore --db mongo-db-name --collection mongo-collection-name mongo-collect
 &lt;p&gt;Under the hood, elasticdump uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSON.stringify&lt;/code&gt; to convert data objects into actual strings to be stored into a file but this causes some issues if the data is just too big. To overcome this, I have created a &lt;a href=&quot;https://github.com/lkpanganiban/python-elasticdump&quot;&gt;python implementation&lt;/a&gt; of elasticdump. This is still a work in progress, I would love if anyone can help in the project.&lt;/p&gt;
 </description>
         <pubDate>Fri, 21 Sep 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/database/2018/09/21/backing-up-elasticsearch-with-elasticdump.html</link>
-        <guid isPermaLink="true">http://localhost:4000/database/2018/09/21/backing-up-elasticsearch-with-elasticdump.html</guid>
+        <link>https://www.lkpangnaiban.com/database/2018/09/21/backing-up-elasticsearch-with-elasticdump.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/database/2018/09/21/backing-up-elasticsearch-with-elasticdump.html</guid>
         
         <category>elasticsearch</category>
         
