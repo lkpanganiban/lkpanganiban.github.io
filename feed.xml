@@ -5,9 +5,91 @@
     <description>Ian&apos;s blog,use Jekyll and github pages.</description>
     <link>https://www.lkpangnaiban.com/</link>
     <atom:link href="https://www.lkpangnaiban.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 09 Nov 2023 19:53:46 +0800</pubDate>
-    <lastBuildDate>Thu, 09 Nov 2023 19:53:46 +0800</lastBuildDate>
+    <pubDate>Fri, 15 Dec 2023 17:07:15 +0800</pubDate>
+    <lastBuildDate>Fri, 15 Dec 2023 17:07:15 +0800</lastBuildDate>
     <generator>Jekyll v3.9.3</generator>
+    
+      <item>
+        <title>Django with PostgreSQL Full-Text Search</title>
+        <description>&lt;h1 id=&quot;context--problem&quot;&gt;Context + Problem&lt;/h1&gt;
+&lt;p&gt;Full-text search serves as a crucial tool for swiftly retrieving information from a vast collection of text or an unstructured data dump. The approach often involves sifting through a plethora of words or text entries to locate specific information promptly. Some databases, such as Elasticsearch or Opensearch, are explicitly designed or prominently feature full-text search capabilities. These solutions exhibit exceptional performance, allowing users to navigate through extensive datasets containing millions of rows in mere milliseconds. However, a notable drawback associated with these systems is their substantial memory requirements, rendering them less suitable for minimal environments, such as those equipped with only 1 core and 1 GB of RAM, where robustness becomes a concern.&lt;/p&gt;
+
+&lt;p&gt;Addressing this challenge, PostgreSQL’s full-text search functionality emerges as a valuable alternative. While it may not match the sheer performance levels of its counterparts, like Elasticsearch or Opensearch, PostgreSQL’s full-text search offers the advantage of simplicity and integration with existing PostgreSQL installations. This means users can leverage the full-text search capabilities without the need for a separate database dedicated solely to this purpose. In essence, PostgreSQL’s solution provides a balance between functionality and resource efficiency, making it a practical choice for scenarios where maintaining a single database is preferable to managing an additional one exclusively for full-text search. This adaptability allows users to optimize their database environments based on their specific needs and resource constraints.&lt;/p&gt;
+
+&lt;h1 id=&quot;setup&quot;&gt;Setup&lt;/h1&gt;
+&lt;h2 id=&quot;cloud--postman&quot;&gt;Cloud + Postman&lt;/h2&gt;
+&lt;p&gt;The performance evaluation uses Django, Django Rest Framework and PostgreSQL and was conducted in a cloud environment using a Digital Ocean droplet equipped with a small hardware resources: 1 core processor and 1 GB of RAM. The operating system of choice was Ubuntu 22.04 LTS, with Docker serving as the primary containerization runtime to ensure a consistent and reproducible testing environment.&lt;/p&gt;
+
+&lt;p&gt;The application stack comprised Django as the web framework along with PostgreSQL as the relational database management system. Here, the Django Object-Relational Mapping (ORM) played a pivotal role, functioning as the chief translator responsible for converting user requests into full-text search queries executed on the PostgreSQL database.&lt;/p&gt;
+
+&lt;p&gt;For the setup above, I’ve used Postman to simulate users querying or hitting the service.  Here is the configuration of Postman to simulate the testing and benchmarking of 100 users simultaneously querying or accessing the service.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20231215/postman-configurations.png&quot; alt=&quot;postman&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
+&lt;p&gt;Django provides a very nice wrapper to handle the full-text search queries in PostgreSQL. You can use the following code to do this.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.http&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JsonResponse&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.contrib.postgres.search&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SearchVector&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;rest_framework&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;permissions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewsets&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;rest_framework.decorators&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;rest_framework_tracking.mixins&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LoggingMixin&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.serializers&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyModelSerializer&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyModelViewset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LoggingMixin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewsets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModelViewSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;queryset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;serializer_class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyModelSerializer&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;text_search&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;q&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;annotate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SearchVector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;&quot;my_model_field_1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;&quot;my_model_field_2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+                &lt;span class=&quot;c1&quot;&gt;# more model fields here
+&lt;/span&gt;            &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text_search&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text_search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_from&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;serializer_class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;many&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;features&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;total&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JsonResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can still improve the code above by adding pagination and permission classes. Pagination is a technique that allows you to split your data into smaller chunks and display them on different pages. This can improve the performance and usability of your application, especially when you have a large amount of data. Permission classes are a way to control who can access or modify your data. You can define different levels of permissions based on the user’s role, authentication, or other criteria. This can enhance the security and privacy of your application, as well as prevent unauthorized or malicious actions.&lt;/p&gt;
+
+&lt;p&gt;We can notice that the code above is easier to implement. Some integration like Elasticsearch will require you to install a DSL library and implement a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;documents.py&lt;/code&gt; just to properly index the fields. Elasticsearch is a popular and powerful full-text search engine that can handle large-scale and distributed data. However, it also requires more resources and setup to use. You need to install and run Elasticsearch as a separate service, and communicate with it using a REST API or a DSL library. You also need to define and update the schema of your data, and create and manage the documents that represent your data. This can add more complexity and overhead to your application development and maintenance.&lt;/p&gt;
+
+&lt;h1 id=&quot;results&quot;&gt;Results&lt;/h1&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+    &lt;img src=&quot;/static/assets/img/blog/20231215/postman-performance.png&quot; alt=&quot;postman-performance&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;PostgreSQL’s full text search is a powerful feature that allows you to perform complex queries on text data. It provides the performance above, which means that it can handle a large number of requests per second with low latency. During the performance test, we measured the CPU and memory usage of our system. The CPU usage was pegged at 100%, which indicates that the CPU is the limiting factor for our system’s performance. The memory usage was about 45%, which means that we still have some free memory available. We can infer that our system is bottlenecked by the CPU, and that we could improve the performance by upgrading the CPU or adding more CPU cores.&lt;/p&gt;
+
+&lt;p&gt;Overall, this is already a good enough result for small system deployments, such as personal projects or prototypes. You can have a feature rich application that is very functional, without requiring a lot of resources or configuration.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 15 Dec 2023 00:00:00 +0800</pubDate>
+        <link>https://www.lkpangnaiban.com/database/python/2023/12/15/postgresql-fulltext-search.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/database/python/2023/12/15/postgresql-fulltext-search.html</guid>
+        
+        <category>postgresql</category>
+        
+        <category>django</category>
+        
+        
+        <category>Database</category>
+        
+        <category>Python</category>
+        
+      </item>
     
       <item>
         <title>Chains with LLMs</title>
