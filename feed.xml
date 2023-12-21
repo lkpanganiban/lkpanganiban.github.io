@@ -5,8 +5,8 @@
     <description>Ian&apos;s blog,use Jekyll and github pages.</description>
     <link>https://www.lkpangnaiban.com/</link>
     <atom:link href="https://www.lkpangnaiban.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 21 Dec 2023 15:18:34 +0800</pubDate>
-    <lastBuildDate>Thu, 21 Dec 2023 15:18:34 +0800</lastBuildDate>
+    <pubDate>Thu, 21 Dec 2023 15:28:21 +0800</pubDate>
+    <lastBuildDate>Thu, 21 Dec 2023 15:28:21 +0800</lastBuildDate>
     <generator>Jekyll v3.9.3</generator>
     
       <item>
@@ -40,85 +40,86 @@
   &lt;li&gt;&lt;strong&gt;traefik_dynamic.toml&lt;/strong&gt;: Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Traefik&lt;/code&gt; has a built-in dashboard which you can use, you can configure this to be protected by defining a simple authentication.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-toml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[http.middlewares.simpleAuth.basicAuth]&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;py&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;admin:&amp;lt;encrypted-password&amp;gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[http.middlewares.simpleAuth.basicAuth]
+  users = [
+    &quot;admin:&amp;lt;encrypted-password&amp;gt;&quot;
+  ]
 
-&lt;span class=&quot;nn&quot;&gt;[http.routers.api]&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;py&quot;&gt;rule&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Host(`traefik-dashboard-domain.com`)&quot;&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;py&quot;&gt;entrypoints&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;[&quot;websecure&quot;]&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;py&quot;&gt;middlewares&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;[&quot;simpleAuth&quot;]&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;py&quot;&gt;service&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;api@internal&quot;&lt;/span&gt;
+[http.routers.api]
+  rule = &quot;Host(`traefik-dashboard-domain.com`)&quot;
+  entrypoints = [&quot;websecure&quot;]
+  middlewares = [&quot;simpleAuth&quot;]
+  service = &quot;api@internal&quot;
 
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;[http.routers.api.tls]&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;err&quot;&gt; &lt;/span&gt; &lt;span class=&quot;py&quot;&gt;certResolver&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;lets-encrypt&quot;&lt;/span&gt;
+  [http.routers.api.tls]
+    certResolver = &quot;lets-encrypt&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;acme.json&lt;/strong&gt;: This contains the SSL certificate for your domains. We set this to empty upon creation since this will be populated by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;traefik&lt;/code&gt;. Below are sample contents of this file.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;lets-encrypt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Account&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Email&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;myemail@mydomain.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Registration&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;body&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;status&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;valid&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;contact&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;mailto:myemail@mydomain.com&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &quot;lets-encrypt&quot;: {
+    &quot;Account&quot;: {
+      &quot;Email&quot;: &quot;myemail@mydomain.com&quot;,
+      &quot;Registration&quot;: {
+        &quot;body&quot;: {
+          &quot;status&quot;: &quot;valid&quot;,
+          &quot;contact&quot;: [
+            &quot;mailto:myemail@mydomain.com&quot;
+          ]
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        },
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;uri&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;https://acme-v02.api.letsencrypt.org/acme/acct/....&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &quot;uri&quot;: &quot;https://acme-v02.api.letsencrypt.org/acme/acct/....&quot;
+      },
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;PrivateKey&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;KeyType&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;4096&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;Certificates&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+      &quot;PrivateKey&quot;: &quot;...&quot;,
+      &quot;KeyType&quot;: &quot;4096&quot;,
+      &quot;Certificates&quot;: []
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;traefik.prod.toml:&lt;/strong&gt; This contains the entrypoints to your ports 80 and 443. This also specifies the configuration for SSL certificate in this case &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Let&apos;s Encrypt&lt;/code&gt; like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;email&lt;/code&gt; and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acme.json&lt;/code&gt;
-```toml
-[entryPoints]
-  [entryPoints.web]
-  address = “:80”
-    [entryPoints.web.http.redirections.entryPoint]
-      to = “websecure”
-      scheme = “https”
-  [entryPoints.websecure]
-  address = “:443”&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;traefik.prod.toml:&lt;/strong&gt; This contains the entrypoints to your ports 80 and 443. This also specifies the configuration for SSL certificate in this case &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Let&apos;s Encrypt&lt;/code&gt; like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;email&lt;/code&gt; and the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acme.json&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;[api]
-  dashboard = true&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[entryPoints]
+  [entryPoints.web]
+  address = &quot;:80&quot;
+    [entryPoints.web.http.redirections.entryPoint]
+      to = &quot;websecure&quot;
+      scheme = &quot;https&quot;
+  [entryPoints.websecure]
+  address = &quot;:443&quot;
 
-&lt;p&gt;[accessLog]
+[api]
+  dashboard = true
+
+[accessLog]
 [providers.docker]
   watch = true
-  network = “web”&lt;/p&gt;
+  network = &quot;web&quot;
 
-&lt;p&gt;[certificatesResolvers.lets-encrypt.acme]
-  email = “myemail@mydomain.com”
-  storage = “acme.json”
-  [certificatesResolvers.lets-encrypt.acme.tlsChallenge]&lt;/p&gt;
+[certificatesResolvers.lets-encrypt.acme]
+  email = &quot;myemail@mydomain.com&quot;
+  storage = &quot;acme.json&quot;
+  [certificatesResolvers.lets-encrypt.acme.tlsChallenge]
 
-&lt;p&gt;[providers.file]
-  filename = “traefik_dynamic.toml”&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;### MinIO Configuration Files
+[providers.file]
+  filename = &quot;traefik_dynamic.toml&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-MinIO has a simple configuration settings that you may want to configure first and these can be defined as `Environment Variables`. For this one, we will use the `.env` of docker file since we will be defining these variables as docker environment variables. 
+&lt;h3 id=&quot;minio-configuration-files&quot;&gt;MinIO Configuration Files&lt;/h3&gt;
 
-```.env
-MINIO_ROOT_USER=&amp;lt;minio-root-user&amp;gt;
+&lt;p&gt;MinIO has a simple configuration settings that you may want to configure first and these can be defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Environment Variables&lt;/code&gt;. For this one, we will use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env&lt;/code&gt; of docker file since we will be defining these variables as docker environment variables.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-.env&quot;&gt;MINIO_ROOT_USER=&amp;lt;minio-root-user&amp;gt;
 MINIO_ROOT_PASSWORD=&amp;lt;minio-root-password&amp;gt;
 MINIO_DOMAIN=&amp;lt;minio-console-domain&amp;gt;
 MINIO_SERVER_URL=&amp;lt;minio-api-domain&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Out of the box, MinIO provides 2 services, one for the dashboard or what they call the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MinIO Console&lt;/code&gt;. By default, this will be served at port &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;9001&lt;/code&gt;. And the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MinIO API&lt;/code&gt; where you can connect or access the REST API of MinIO. &lt;em&gt;MinIO has various clients where you can interact with the REST API like Go, Python, NodeJS&lt;/em&gt;.&lt;/p&gt;
 
@@ -132,18 +133,18 @@ MINIO_SERVER_URL=&amp;lt;minio-api-domain&amp;gt;
   &lt;span class=&quot;na&quot;&gt;traefik&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;traefik:v2.10.4&lt;/span&gt;
     &lt;span class=&quot;s&quot;&gt;container_name:traefik&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/var/run/docker.sock:/var/run/docker.sock&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;- ./traefik/traefik.prod.toml:/traefik.toml&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;- ./traefik/traefik_dynamic.toml:/traefik_dynamic.toml&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;- ./traefik/acme.json:/acme.json&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/var/run/docker.sock:/var/run/docker.sock&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./traefik/traefik.prod.toml:/traefik.toml&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./traefik/traefik_dynamic.toml:/traefik_dynamic.toml&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;./traefik/acme.json:/acme.json&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;80:80&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;443:443&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;networks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	  &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;internal&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;- web&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;storage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;internal&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;web&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;storage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker.io/bitnami/minio:2023&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;container_name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;minio_storage&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;env_file&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
@@ -155,7 +156,7 @@ MINIO_SERVER_URL=&amp;lt;minio-api-domain&amp;gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;minio_data:/bitnami/minio/data&apos;&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
       &lt;span class=&quot;c1&quot;&gt;#configuration of the minio console or UI&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	  &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;traefik.http.routers.storage.rule=Host(`storage.mysite.com`)&quot;&lt;/span&gt; 
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;traefik.http.routers.storage.rule=Host(`storage.mysite.com`)&quot;&lt;/span&gt; 
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;traefik.http.routers.storage.tls=true&quot;&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;traefik.http.routers.storage.tls.certresolver=lets-encrypt&quot;&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;traefik.http.routers.storage.service=storage&quot;&lt;/span&gt;
@@ -166,9 +167,9 @@ MINIO_SERVER_URL=&amp;lt;minio-api-domain&amp;gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;traefik.http.routers.console.service=console&quot;&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;traefik.http.routers.console.tls.certresolver=lets-encrypt&quot;&lt;/span&gt;
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;traefik.http.services.console.loadbalancer.server.port=9000&quot;&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;networks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;internal&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;	&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;- web&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;networks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;internal&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;web&lt;/span&gt;
 
 &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
   &lt;span class=&quot;na&quot;&gt;minio_data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
