@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+        <loc>https://www.lkpangnaiban.com/devops/2023/12/21/traefik-minio.html</loc>
+    </url>
+
+    <url>
         <loc>https://www.lkpangnaiban.com/database/python/2023/12/15/postgresql-fulltext-search.html</loc>
     </url>
 

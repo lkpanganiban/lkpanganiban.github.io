@@ -3,6 +3,14 @@
     "data" : [
      
     {
+        "title" : "Deploying MinIO with Traefik - 2023-12-21",
+        "url" : "/devops/2023/12/21/traefik-minio.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "Django with PostgreSQL Full-Text Search - 2023-12-15",
         "url" : "/database/python/2023/12/15/postgresql-fulltext-search.html"
     }
