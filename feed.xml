@@ -5,9 +5,40 @@
     <description>Ian&apos;s blog,use Jekyll and github pages.</description>
     <link>https://www.lkpangnaiban.com/</link>
     <atom:link href="https://www.lkpangnaiban.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 21 Dec 2023 15:28:21 +0800</pubDate>
-    <lastBuildDate>Thu, 21 Dec 2023 15:28:21 +0800</lastBuildDate>
+    <pubDate>Sun, 24 Dec 2023 16:25:39 +0800</pubDate>
+    <lastBuildDate>Sun, 24 Dec 2023 16:25:39 +0800</lastBuildDate>
     <generator>Jekyll v3.9.3</generator>
+    
+      <item>
+        <title>Metal vs Object Level Skills</title>
+        <description>&lt;h1 id=&quot;metal-vs-object-level-skills&quot;&gt;Metal vs Object Level Skills&lt;/h1&gt;
+
+&lt;p&gt;When contemplating skills, our tendency is often to link them with specific tools, such as knowing how to execute task X with tool A or accomplishing task X using tool B. Consequently, there’s a tendency to prioritize learning the tool over mastering the skill.&lt;/p&gt;
+
+&lt;p&gt;In a data-focused Facebook group, someone inquired about the potential benefits of taking a DataCamp course to obtain a certificate in Azure fundamentals. I responded by emphasizing the independence of these two pursuits. I suggested that the choice should be guided by individual goals, underscoring the importance of concentrating not excessively on tools but on foundational concepts that these courses offer. I stressed the idea that acquiring a profound understanding of these foundational concepts facilitates a smoother comprehension of tool functionalities, fostering adaptability.&lt;/p&gt;
+
+&lt;p&gt;This is where the concepts of metal and object-level skills come into play. Metal-level skills are fundamental and applicable across various roles, while object-level skills are built upon these metal-level skills and often lead to specialization. Learning metal-level skills, especially in data-related domains, provides a broader understanding applicable to roles like data analyst, data scientist, and data engineer. This approach offers flexibility by reducing dependence on specific tools. While object-level skills hold value, they should not overshadow the emphasis on metal-level skills, as tools can change, but fundamental concepts endure.&lt;/p&gt;
+
+&lt;p&gt;Illustrating this point, I recounted an experience with a data scientist colleague who, despite holding certifications in Python, SQL, and data science, struggled with a task involving combining disparate data schemas. His expertise was confined to using Pandas for CSV data or connecting to SQL databases, hindering him when faced with diverse data sources. This scenario highlighted the limitations of object-level skills. In contrast, possessing metal-level skills allowed me to employ general Python, including nested for-loops and regex, to resolve the issue effectively.&lt;/p&gt;
+
+&lt;p&gt;Returning to the initial question about DataCamp and Azure, I stressed that metal-level skills serve as the foundation. For DataCamp, focusing on data concepts like normalization, ETL/ELT processes, visualization, and data warehousing is crucial. Similarly, for Azure, foundational concepts in networking, storage, compute, and security should be prioritized.&lt;/p&gt;
+
+&lt;p&gt;Ultimately, the decision to delve into metal or object-level skills is a personal one. However, the advice remains consistent: allocate more time to mastering metal-level skills, as proficiency in object-level skills will naturally follow suit.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 24 Dec 2023 00:00:00 +0800</pubDate>
+        <link>https://www.lkpangnaiban.com/discourse/2023/12/24/object-vs-metal-level-skills.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/discourse/2023/12/24/object-vs-metal-level-skills.html</guid>
+        
+        <category>thoughts</category>
+        
+        <category>discourse</category>
+        
+        <category>blurb</category>
+        
+        
+        <category>discourse</category>
+        
+      </item>
     
       <item>
         <title>Deploying MinIO with Traefik</title>
@@ -212,8 +243,10 @@ MINIO_SERVER_URL=&amp;lt;minio-api-domain&amp;gt;
         
         <category>minio</category>
         
+        <category>devops</category>
         
-        <category>DevOps</category>
+        
+        <category>Devops</category>
         
       </item>
     
@@ -974,8 +1007,8 @@ if __name__ == &apos;__main__&apos;:
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 14 Jan 2023 00:00:00 +0800</pubDate>
-        <link>https://www.lkpangnaiban.com/python/2023/01/14/creating-a-python-binary.html</link>
-        <guid isPermaLink="true">https://www.lkpangnaiban.com/python/2023/01/14/creating-a-python-binary.html</guid>
+        <link>https://www.lkpangnaiban.com/python/devops/2023/01/14/creating-a-python-binary.html</link>
+        <guid isPermaLink="true">https://www.lkpangnaiban.com/python/devops/2023/01/14/creating-a-python-binary.html</guid>
         
         <category>python</category>
         
@@ -983,6 +1016,8 @@ if __name__ == &apos;__main__&apos;:
         
         
         <category>Python</category>
+        
+        <category>Devops</category>
         
       </item>
     

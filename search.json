@@ -3,6 +3,14 @@
     "data" : [
      
     {
+        "title" : "Metal vs Object Level Skills - 2023-12-24",
+        "url" : "/discourse/2023/12/24/object-vs-metal-level-skills.html"
+    }
+    
+    ,
+    
+    
+    {
         "title" : "Deploying MinIO with Traefik - 2023-12-21",
         "url" : "/devops/2023/12/21/traefik-minio.html"
     }
@@ -92,7 +100,7 @@
     
     {
         "title" : "Compiling and Packaging Python Applications into Single Binary - 2023-01-14",
-        "url" : "/python/2023/01/14/creating-a-python-binary.html"
+        "url" : "/python/devops/2023/01/14/creating-a-python-binary.html"
     }
     
     ,
