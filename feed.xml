@@ -5,13 +5,17 @@
     <description>Ian&apos;s blog,use Jekyll and github pages.</description>
     <link>https://www.lkpangnaiban.com/</link>
     <atom:link href="https://www.lkpangnaiban.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 25 Dec 2023 09:00:12 +0800</pubDate>
-    <lastBuildDate>Mon, 25 Dec 2023 09:00:12 +0800</lastBuildDate>
+    <pubDate>Mon, 25 Dec 2023 09:32:01 +0800</pubDate>
+    <lastBuildDate>Mon, 25 Dec 2023 09:32:01 +0800</lastBuildDate>
     <generator>Jekyll v3.9.3</generator>
     
       <item>
         <title>Metal vs Object Level Skills</title>
-        <description>&lt;p&gt;When contemplating skills, our tendency is often to link them with specific tools, such as knowing how to execute task X with tool A or accomplishing task X using tool B. Consequently, there’s a tendency to prioritize learning the tool over mastering the skill.&lt;/p&gt;
+        <description>&lt;p align=&quot;center&quot;&gt; 
+    &lt;img src=&quot;/static/assets/img/blog/20231224/object-metal.png&quot; alt=&quot;object-vs-metal&quot; width=&quot;500&quot; height=&quot;500&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;When contemplating skills, our tendency is often to link them with specific tools, such as knowing how to execute task X with tool A or accomplishing task X using tool B. Consequently, there’s a tendency to prioritize learning the tool over mastering the skill.&lt;/p&gt;
 
 &lt;p&gt;In a data-focused Facebook group, someone inquired about the potential benefits of taking a DataCamp course to obtain a certificate in Azure fundamentals. I responded by emphasizing the independence of these two pursuits. I suggested that the choice should be guided by individual goals, underscoring the importance of concentrating not excessively on tools but on foundational concepts that these courses offer. I stressed the idea that acquiring a profound understanding of these foundational concepts facilitates a smoother comprehension of tool functionalities, fostering adaptability.&lt;/p&gt;
 
