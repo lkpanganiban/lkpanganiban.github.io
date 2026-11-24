@@ -1,31 +1,18 @@
-$(document).ready(function() {
-  users = []
-  repos = []
-  $(".ghbtn").each( function () {
-    var user = $(this).attr('user');
-    var repo = $(this).attr('repo');
-    repos.push(user + '/' + repo);
-      if (users.indexOf($(this).attr('user')) === -1) {
-        users.push($(this).attr('user'))
-      }
-  })
-  // console.log(1, users, repos)
-  for (var i = 0; i < users.length; i++) {
-    $.ajax({
-    type: "GET",
-    url: "https://api.github.com/users/" + users[i] + "/repos?per_page=100",
-    tryCount : 0,
-    retryLimit : 3,
-    async: true,
-    dataType: "json",
-    success: function (data) {
-      for  (var i = 0; i < data.length; i++) {
-        if (repos.indexOf(data[i].full_name) !== -1) {
-          x = data[i].name;
-          $("div[repo='" + x + "']").children(".star").html('<i class="fa fa-star"></i> ' + data[i].stargazers_count)
-          $("div[repo='" + x + "']").children(".fork").html('<i class="fa fa-code-fork"></i> ' + data[i].forks_count)
-        }
-      }
-    }
-  })}
-});
+// One unauthenticated GitHub API call populates star counts on the landing page.
+// Cards work without it (they ship with a "★ —" placeholder).
+(function () {
+  var REPO_API = 'https://api.github.com/users/lkpanganiban/repos?per_page=100&type=owner';
+  fetch(REPO_API, { headers: { Accept: 'application/vnd.github+json' } })
+    .then(function (response) {
+      if (!response.ok) throw new Error('GitHub API ' + response.status);
+      return response.json();
+    })
+    .then(function (repos) {
+      repos.forEach(function (repo) {
+        if (repo.fork) return; // forks are deliberately not featured on the site
+        var el = document.querySelector('.stars[data-repo="' + repo.full_name + '"]');
+        if (el) el.textContent = '★ ' + repo.stargazers_count;
+      });
+    })
+    .catch(function () { /* keep placeholders */ });
+})();
